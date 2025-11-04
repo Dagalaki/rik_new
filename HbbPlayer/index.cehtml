@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ *
+ * Copyright (c) 2016, Samsung Electronics Co., Ltd
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+-->
+
+<!--
+	sample URL for HbbPlayer
+	hbbplayer.cehtml?url=http://some.url/to.movie&amp;type=playerType
+	parameters: 
+		url - URL to video content
+		type - type of player that shall be used,
+		 		possible values: AVObject player, html5 (only for HbbTV profile 2.0)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>HbbPlayer</title>
+	<script type="text/javascript" src="controls.js"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+
+		function parseURL() {
+			var search,
+				parts,
+				parsedURL = {},
+				temp,
+				i;
+
+			search = window.location.search.substr(1);
+			parts = search.split('&');
+			for (i = 0; i < parts.length; i++) {
+				temp = parts[i].split('=');
+				parsedURL[temp[0]] = temp[1];
+			}
+
+			return parsedURL;
+		}
+
+		function createAVPlayer(url) {
+			var player;
+			
+			player = document.createElement("object");
+			player.setAttribute("type", "video/mp4");
+			player.setAttribute("data", url);
+
+			document.body.appendChild(player);
+
+			player.setFullScreen(true);
+			player.play(1);
+		}
+
+		/**
+		 * HTML5 video tag can be used only in HbbTV 2.0 profile
+		 * @param url
+		 */
+		function createVideoPlayer(url) {
+			var player, source;
+			
+			player = document.createElement("video");
+			source = document.createElement("source");
+			source.src = url;
+			source.type = "video/mp4";
+			player.appendChild(source);
+
+			player.autoplay = true;
+
+			document.body.appendChild(player);
+		}
+
+        window.onload = function() {
+			var parsedURL;
+
+			if (typeof oipfObjectFactory == "undefined") {	// workaround for WebBrowsers
+				appManager = document.createElement("object");
+				appManager.type = "application/oipfApplicationManager";
+				appManager.id = "appManager";
+				document.body.appendChild(appManager);
+			} else {
+				appManager = oipfObjectFactory.createApplicationManagerObject();
+			}
+
+			app = appManager.getOwnerApplication(document);
+			app.show();
+			parsedURL = parseURL();
+
+			if (parsedURL.type === "html5" && parseFloat(navigator.userAgent.substring(navigator.userAgent.indexOf("HbbTV/")+8, navigator.userAgent.indexOf(" ", navigator.userAgent.indexOf("HbbTV/")))) >= 3.1) {
+				createVideoPlayer(parsedURL.url);
+			} else {
+				alert(parsedURL.url);
+				createAVPlayer(parsedURL.url);
+			}
+
+			controls.initialize();
+        };
+
+        //]]>
+    </script>
+</head>
+<body></body>
+</html>

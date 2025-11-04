@@ -1,0 +1,1562 @@
+/*
+ * HbbTV App for skai - https://www.skaitv.gr/
+ * (C) 2020 - Real TV
+ * started at 10/02/2020
+ *
+ */
+var activeCont = prevCont = infotop = privacyTop = returnfocus = JSONData = newsShowId = currScene = 0;
+var onpc = /Firefox/i.test(navigator.userAgent);
+var newsarray = [];
+
+/*
+ * --- Skai Object ---
+ * Initial container for home page, will also load JSON.
+ * Functions:
+ *  - init: init app, load JSON URL
+ *  - parseJSON: parse JSON file and init menu
+ *  - setRF: start RF channel
+ */
+
+function Skai(idnam) {
+    this.idnam = idnam;
+    this.focusedId = 0;
+}
+
+Skai.prototype = new BaseObject();
+Skai.prototype.init = function (parent, xpos, ypos) {
+    var cont = createClassDiv("", "", "skai-list");
+    this.parent = parent;
+    this.parent.appendChild(cont);
+    this.baseInit(cont);
+    this.register();
+    this.buttons = [];
+
+
+    var me = this;
+    var url = 'http://smarttv.anixa.tv/skai_new/json/all.json';
+    this.req = createHttpRequest(url, function (ret) {
+        me.req = null;
+        me.parseJSON(ret);
+    });
+}
+Skai.prototype.parseJSON = function (response) {
+    JSONData = JSON.parse(response);
+    llog(JSONData.elems);
+
+    // var lc = new Cont("home-cont", true);
+    // lc.init(this.parent, "", "", "ΜΗ ΧΑΣΕΙΣ");
+    // lc.elem.style.backgroundImage = "url(img/bg/home.jpg)";
+
+    // activeCont = GLOBALS.focusmgr.getObject("home-cont");
+    this.createHome();
+}
+Skai.prototype.createHome = function () {
+    var e = new Cont("home-cont", true);
+    GLOBALS.scenemgr.addScene(e);
+    GLOBALS.scenemgr.showCurrentScene("");
+    e.elem.style.backgroundImage = "url(img/bg/home.jpg)";
+    activeCont = GLOBALS.focusmgr.getObject("home-cont");
+}
+Skai.prototype.createNews = function () {
+    var e = new Cont("news", false);
+    GLOBALS.scenemgr.addScene(e);
+    GLOBALS.scenemgr.showCurrentScene("");
+    e.elem.style.backgroundImage = "url(img/bg/news.jpg)";
+    activeCont = GLOBALS.focusmgr.getObject("news");
+}
+Skai.prototype.createEpisodes = function () {
+    var e = new Cont("episodes", true);
+    GLOBALS.scenemgr.addScene(e);
+    GLOBALS.scenemgr.showCurrentScene("");
+    if (activeCont.idnam == "shows") {
+        e.elem.style.backgroundImage = "url(img/bg/shows.jpg)";
+    } else if (activeCont.idnam == "news") {
+        e.elem.style.backgroundImage = "url(img/bg/news.jpg)";
+    }
+    activeCont = GLOBALS.focusmgr.getObject("episodes");
+}
+Skai.prototype.createShows = function () {
+    var e = new Cont("shows", false);
+    GLOBALS.scenemgr.addScene(e);
+    GLOBALS.scenemgr.showCurrentScene("");
+    e.elem.style.backgroundImage = "url(img/bg/shows.jpg)";
+    activeCont = GLOBALS.focusmgr.getObject("shows");
+}
+Skai.prototype.createSeries = function () {}
+Skai.prototype.createEPG = function () {
+    var e = new Cont("epg", false);
+    GLOBALS.scenemgr.addScene(e);
+    GLOBALS.scenemgr.showCurrentScene("");
+    e.elem.style.backgroundImage = "url(img/bg/epg.jpg)";
+    activeCont = GLOBALS.focusmgr.getObject("epg");
+}
+Skai.prototype.createBigBrother = function () {
+    var e = new Cont("bigbrother", true);
+    GLOBALS.scenemgr.addScene(e);
+    GLOBALS.scenemgr.showCurrentScene("");
+    e.elem.style.backgroundImage = "url(img/bg/bigbrother.jpg)";
+    activeCont = GLOBALS.focusmgr.getObject("bigbrother");
+    var m = GLOBALS.scenemgr.top;
+    m.style.visibility = "hidden";
+    document.getElementById("tvbild").style.display = "none";
+    if (document.getElementById('mybroadcast')) {
+        var dvb = document.getElementById('mybroadcast');
+        try {
+            dvb.stop();
+        } catch (e) {}
+        try {
+            dvb.release();
+        } catch (e) {}
+    }
+}
+Skai.prototype.createSearch = function () {
+    var e = new Search("search");
+    GLOBALS.scenemgr.addScene(e);
+    GLOBALS.scenemgr.showCurrentScene("");
+    e.elem.style.backgroundImage = "url(img/bg/epg.jpg)";
+    activeCont = GLOBALS.focusmgr.getObject("search");
+    GLOBALS.focusmgr.focusObject("keyboard_gr", true);
+}
+
+var sidebar = [{
+        "name": "SKAI",
+        "icon_on": "img/logo.png",
+        "icon_off": "img/logo.png"
+    },
+
+    //{"name": "24news", "icon_on": "", "icon_off": ""},
+    {
+        "name": "BigBrother",
+        "icon_on": "img/bigbrother.png",
+        "icon_off": "img/bigbrother.png"
+    },
+
+];
+
+var skaimenu = [{
+        "name": "Αρχική",
+        "image_on": "",
+        "image_off": "",
+        "classname": "home"
+    },
+    {
+        "name": "Ενημέρωση",
+        "image_on": "",
+        "image_off": "",
+        "classname": "topic"
+    },
+    {
+        "name": "Ψυχαγωγία",
+        "image_on": "",
+        "image_off": "",
+        "classname": "topic"
+    },
+    {
+        "name": "Σειρές",
+        "image_on": "",
+        "image_off": "",
+        "classname": "topic"
+    },
+    {
+        "name": "Πρόγραμμα",
+        "image_on": "",
+        "image_off": "",
+        "classname": "time"
+    },
+    {
+        "name": "Αναζήτηση",
+        "image_on": "",
+        "image_off": "",
+        "classname": "srch"
+    },
+];
+
+var selectedshows = {
+    'home-cont': {
+        'showindex': 3,
+        'selected': 2
+    },
+    'news': {
+        'showindex': 0,
+        'selected': 1
+    },
+    'shows': {
+        'showindex': 3,
+        'selected': 1
+    }
+};
+
+function SubMenu(idnam, submenu) {
+    this.idnam = idnam;
+    this.focusedId = 0;
+    this.activeId = 0;
+    this.submenu = submenu;
+}
+SubMenu.prototype = new BaseObject();
+SubMenu.prototype.init = function (parent, xpos, ypos) {
+    var e = createClassDiv("", "", "submenu");
+    this.parent = parent;
+    parent.appendChild(e);
+    this.baseInit(e);
+    this.register();
+    this.buttons = [];
+
+    this.outer = createClassDiv(0, 30, "outer");
+    this.elem.appendChild(this.outer);
+
+    for (var i = 0; i < this.submenu.length; i++) {
+        var inner = createClassDiv("", "", "inner");
+        var menuelemicon = createClassDiv("", "", "menuelemicon " + this.submenu[i].classname);
+        inner.appendChild(menuelemicon);
+        var text = createClassDiv("", "", "text");
+        text.innerHTML = this.submenu[i].name;
+        inner.appendChild(text);
+        this.outer.appendChild(inner);
+        this.buttons[i] = inner;
+    }
+
+}
+
+SubMenu.prototype.setFocused = function (otherobj, focus) {
+    var o = GLOBALS.focusmgr.getObject("side-bar");
+    for (var i = 0; i < this.buttons.length; i++) {
+        if (focus) {
+            if (i == this.focusedId) this.buttons[i].addClass("focused");
+            else this.buttons[i].removeClass("focused");
+            o.open();
+
+        } else {
+            this.buttons[i].removeClass("focused");
+            o.close();
+
+        }
+    }
+}
+SubMenu.prototype.handleKeyPress = function (keycode) {
+    switch (keycode) {
+        case VK_UP:
+            this.focusedId--;
+            if (this.focusedId < 0) this.focusedId = 0;
+            this.setFocused(this.idnam, true);
+            break;
+        case VK_DOWN:
+            this.focusedId++;
+            if (this.focusedId > this.buttons.length - 1) {
+                this.focusedId = this.buttons.length - 1;
+            }
+            this.setFocused(this.idnam, true);
+            break;
+        case VK_ENTER:
+            this.handleRequest();
+            break;
+        case VK_RIGHT:
+            var o = GLOBALS.focusmgr.getObject("side-bar");
+            o.close();
+            GLOBALS.scenemgr.obtainFocus();
+            break;
+        default:
+            break;
+    }
+}
+SubMenu.prototype.handleRequest = function () {
+    var o = GLOBALS.focusmgr.getObject("skai");
+    switch (this.focusedId) {
+        case 0:
+            if (activeCont.idnam == "home-cont")
+                break;
+            o.createHome();
+            llog(GLOBALS.scenemgr.sceneStack);
+            break;
+        case 1:
+            if (activeCont.idnam == "news")
+                break;
+            o.createNews();
+            llog(GLOBALS.scenemgr.sceneStack);
+            break;
+        case 2:
+            if (activeCont.idnam == "shows")
+                break;
+            o.createShows();
+            llog(GLOBALS.scenemgr.sceneStack);
+            break;
+        case 4:
+            if (activeCont.idnam == "epg")
+                break;
+            o.createEPG();
+            llog(GLOBALS.scenemgr.sceneStack);
+            break;
+    }
+}
+
+function SideBar(idnam) {
+    this.idnam = idnam;
+    this.focusedId = 0;
+    this.activeId = 0;
+}
+SideBar.prototype = new BaseObject();
+SideBar.prototype.init = function (parent, xpos, ypos) {
+    var e = createClassDiv("", "", "sidebar");
+    this.parent = parent;
+    parent.appendChild(e);
+    this.baseInit(e);
+    this.register();
+    this.buttons = [];
+
+    this.outer = createClassDiv(64, 36, "outer");
+    this.elem.appendChild(this.outer);
+
+    for (var i = 0; i < sidebar.length; i++) {
+        var inner = createClassDiv("", "", "inner");
+        var icon = document.createElement("img");
+        icon.src = sidebar[i].icon_off;
+        inner.appendChild(icon);
+        this.outer.appendChild(inner);
+        this.buttons[i] = inner;
+    }
+
+    //skai submenu object
+    this.skaiMObj = new SubMenu("submenu-0", skaimenu);
+    this.skaiMObj.init(this.buttons[0], "", "");
+}
+SideBar.prototype.open = function () {
+    this.elem.style.width = "295px";
+    for (var i = 0; i < this.buttons.length; i++) {
+        if (i == this.focusedId) this.buttons[i].addClass("focused");
+        else this.buttons[i].removeClass("focused");
+    }
+    this.elem.addClass("open");
+    document.getElementsByClassName("basic-menu-container")[0].addClass("open");
+}
+SideBar.prototype.close = function () {
+    this.elem.style.width = "105px";
+    for (var i = 0; i < this.buttons.length; i++) {
+        this.buttons[i].removeClass("focused");
+    }
+    this.elem.removeClass("open");
+    document.getElementsByClassName("basic-menu-container")[0].removeClass("open");
+}
+
+/*
+ * --- Menu Object ---
+ * Display menu, add every menu item in buttons array. Also key handler, focus etc.
+ * Functions:
+ *  - init: init and create menu items
+ *  - setFocused: focus menu item
+ *  - openSearch: open search page
+ *  - handleKeyPress: handle key press
+ */
+function Menu(idnam) {
+    this.idnam = idnam;
+    this.focusedId = 0;
+    this.activeId = 0;
+}
+Menu.prototype = new BaseObject();
+Menu.prototype.init = function (parent, xpos, ypos) {
+    var e = createClassDiv("", "", "skai-menu");
+    this.parent = parent;
+    parent.appendChild(e);
+    this.baseInit(e);
+    this.register();
+    this.buttons = [];
+
+    for (i = 0; i < skaimenu.length; i++) {
+        var item = createClassDiv("", "", "menu-item");
+        if (skaimenu[i].name == "Αρχική") {
+            var image = document.createElement("img");
+            image.src = "img/logo.png";
+            image.style.width = "75px";
+            item.appendChild(image);
+        } else if (skaimenu[i].name == "Αναζήτηση") {
+            var image = document.createElement("img");
+            image.src = "img/search.png";
+            image.style.width = "23px";
+            item.appendChild(image);
+        } else
+            item.innerHTML = skaimenu[i].name;
+        this.buttons.push(item);
+        e.appendChild(item);
+    }
+
+    var item7 = createClassDiv("", "", "menu-icon");
+    item7.id = 6;
+    item7.style.paddingLeft = "5px";
+    item7.style.paddingRight = "5px";
+    var im = document.createElement('img');
+    im.src = "img/24news.png";
+    item7.appendChild(im);
+    this.buttons.push(item7);
+    e.appendChild(item7);
+
+    var item8 = createClassDiv("", "", "menu-icon");
+    item8.id = 7;
+    item8.style.paddingLeft = "5px";
+    item8.style.paddingRight = "5px";
+    var im = document.createElement('img');
+    im.src = "img/bigbrother.png";
+    item8.appendChild(im);
+    this.buttons.push(item8);
+    e.appendChild(item8);
+
+    this.setActive();
+}
+Menu.prototype.setFocused = function (otherobj, focus) {
+
+    for (var i = 0; i < this.buttons.length; i++) {
+        if (focus) {
+            if (i == this.focusedId) {
+                this.buttons[i].addClass("focused");
+            } else {
+                if (this.buttons[i].hasClass("focused")) this.buttons[i].removeClass("focused");
+            }
+        } else {
+            if (this.buttons[i].hasClass("focused")) this.buttons[i].removeClass("focused");
+        }
+    }
+
+}
+Menu.prototype.setActive = function () {
+
+    for (var i = 0; i < this.buttons.length; i++) {
+        if (focus) {
+            if (i == this.activeId) {
+                this.buttons[i].addClass("active");
+            } else {
+                if (this.buttons[i].hasClass("active")) this.buttons[i].removeClass("active");
+            }
+        } else {
+            if (this.buttons[i].hasClass("active")) this.buttons[i].removeClass("active");
+        }
+    }
+
+}
+Menu.prototype.handleKeyPress = function (keyCode) {
+
+    if (keyCode === VK_RED) {
+        this.onRed();
+    }
+    if (keyCode === VK_GREEN) {
+        this.onGreen();
+
+        return true;
+    }
+    if (keyCode === VK_YELLOW) {
+        this.onYellow();
+        return true;
+    }
+    if (keyCode === VK_BLUE) {
+        this.onBlue();
+        return true;
+    }
+    switch (keyCode) {
+        case VK_1:
+            window.location.href = "/skai/?menu=sidebar";
+            break;
+        case VK_RIGHT:
+            this.focusedId++;
+            if (this.focusedId > this.buttons.length - 1) {
+                this.focusedId = this.buttons.length - 1;
+                break;
+            }
+            this.setFocused(this.buttons[this.focusedId], true);
+            break;
+        case VK_LEFT:
+            this.focusedId--;
+            if (this.focusedId < 0) {
+                this.focusedId = 0;
+                break;
+            }
+            this.setFocused(this.buttons[this.focusedId], true);
+            break;
+        case VK_DOWN:
+            if (currScene == "epg")
+                GLOBALS.focusmgr.focusObject("epg-dayselect");
+            else if (currScene == "episodes")
+                GLOBALS.focusmgr.focusObject("episodes-list");
+
+            else
+                GLOBALS.focusmgr.focusObject(currScene);
+            break;
+        case VK_ENTER:
+            this.activeId = this.focusedId;
+            this.setActive();
+            var o = GLOBALS.focusmgr.getObject("skai");
+            switch (this.focusedId) {
+                case 0:
+                    if (activeCont.idnam == "home-cont")
+                        break;
+                    o.createHome();
+                    llog(GLOBALS.scenemgr.sceneStack);
+                    break;
+                case 1:
+                    if (activeCont.idnam == "news")
+                        break;
+                    o.createNews();
+                    llog(GLOBALS.scenemgr.sceneStack);
+                    break;
+                case 2:
+                    if (activeCont.idnam == "shows")
+                        break;
+                    o.createShows();
+                    llog(GLOBALS.scenemgr.sceneStack);
+                    break;
+                case 4:
+                    if (activeCont.idnam == "epg")
+                        break;
+                    o.createEPG();
+                    llog(GLOBALS.scenemgr.sceneStack);
+                    break;
+                case 5:
+                    if (activeCont.idnam == "search")
+                        break;
+                    o.createSearch();
+                    llog(GLOBALS.scenemgr.sceneStack);
+                    break;
+                case 7:
+                    if (activeCont.idnam == "bigbrother")
+                        break;
+                    o.createBigBrother();
+                    llog(GLOBALS.scenemgr.sceneStack);
+                    break;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+/*
+ * --- Cont Object ---
+ * Container for show page with title, description, last video, videos list.
+ * Functions:
+ *  - init: init container and horizontal list
+ *  - setFocused: set focus inside page
+ *  - initEpisodes: init episodes list
+ *  - initEPG: init EPG
+ *  - handleKeyPress: handle keys
+ *  - scrollToFocused: scroll to focused object
+ *  - setBgImg: load background iomage
+ */
+function Cont(idnam, listType) {
+    this.idnam = idnam;
+    this.listType = listType;
+    this.focusedId = 0;
+}
+
+Cont.prototype = new BaseObject();
+Cont.prototype.init = function (parent, xpos, ypos, title) {
+    var cont = createClassDiv("", "", "list-container");
+    cont.id = this.idnam;
+    parent.appendChild(cont);
+    this.baseInit(cont);
+    this.register();
+    this.buttons = [];
+
+    currScene = this.idnam;
+
+    if (this.idnam == "epg")
+        this.initEPG(this.elem, "", "");
+    else if (this.idnam == "episodes")
+        this.initEpisodes(this.elem, "", "");
+    else if (this.idnam == "bigbrother")
+        this.initBigBrother(this.elem, "", "");
+    else {
+        var info = createClassDiv("", "", "start-info");
+        var titl = createClassDiv("", "", "start-info-title");
+        var dat = createClassDiv("", "", "start-info-data");
+        switch (this.idnam) {
+            case "home-cont":
+                titl.innerHTML = "<strong>" + JSONData.elems[3].shows[2].show + "</strong>";
+                dat.innerHTML = JSONData.elems[3].shows[2].descr;
+                dat.innerHTML = dat.innerHTML.substring(0, 280) + " ...";
+                break;
+            case "news":
+                titl.innerHTML = "<strong>" + JSONData.elems[0].shows[0].show + "</strong>";
+                dat.innerHTML = JSONData.elems[0].shows[0].descr;
+                dat.innerHTML = dat.innerHTML.substring(0, 275) + " ...";
+                break;
+            case "shows":
+                titl.innerHTML = "<strong>" + JSONData.elems[3].shows[1].show + "</strong>";
+                dat.innerHTML = JSONData.elems[3].shows[1].descr;
+                dat.innerHTML = dat.innerHTML.substring(0, 280) + " ...";
+                break;
+        }
+        info.appendChild(titl);
+        info.appendChild(dat);
+
+        var playbtn = createClassDiv("", "", "info-play");
+        var im = document.createElement('img');
+        im.src = "img/play.png";
+        im.style.width = "10px";
+        playbtn.innerHTML = "Δες εδώ το τελευταίο επεισόδιο | ";
+        playbtn.appendChild(im);
+        this.buttons.push(playbtn);
+        info.appendChild(playbtn);
+
+        this.elem.appendChild(info);
+
+        var botover = createClassDiv("", "", "bottom-overlay");
+        this.elem.appendChild(botover);
+
+        if (this.listType) {
+            if (this.idnam == "home-cont") {
+                var list = new HorizontalList("home-list", true);
+            } else var list = new HorizontalList("latest-list", true);
+            list.initEpisodes(this.elem, "", "", title);
+        } else {
+            var list = new HorizontalList("latest-list", false);
+            list.initShows(this.elem, "", "", title);
+        }
+
+        if (this.idnam == "home-cont") {
+            GLOBALS.focusmgr.focusObject("home-list", true);
+        } else GLOBALS.focusmgr.focusObject("latest-list", true);
+    }
+}
+Cont.prototype.initBigBrother = function (parent, xpos, ypos, title) {
+    var cont = createClassDiv("", "", "bb-container");
+    parent.appendChild(cont);
+    this.baseInit(cont);
+    this.register();
+    this.buttons = [];
+
+
+    var logo = createClassDiv("", "", "bb-logo");
+    var im = document.createElement('img');
+    im.src = "img/bblogo.png"
+    logo.appendChild(im);
+    this.elem.appendChild(logo);
+    var stream = createClassDiv("", "", "bb-stream");
+    this.fscreen = document.createElement('img');
+    this.fscreen.src = "img/fullscreen.png";
+    stream.appendChild(this.fscreen);
+    this.buttons.push(stream);
+    this.elem.appendChild(stream);
+
+    var list = new HorizontalList("episodes-list", true);
+    list.initEpisodes(this.elem, "", "", "ΕΠΕΙΣΟΔΙΑ");
+
+    GLOBALS.focusmgr.focusObject("episodes-list");
+}
+Cont.prototype.initEpisodes = function (parent, xpos, ypos, title) {
+    var cont = createClassDiv("", "", "list-container");
+    parent.appendChild(cont);
+    this.baseInit(cont);
+    this.register();
+    this.buttons = [];
+    var fid2json = [0, 1, 2, 4, 8, 11, 12, 15];
+    var news2vid = [0, 1, 2, 3, 4, 5, 7, 9];
+
+    var li = GLOBALS.focusmgr.getObject("latest-list");
+
+    var info = createClassDiv("", "", "start-info");
+    info.addClass("epinfo");
+    var titl = createClassDiv("", "", "start-info-title");
+    var dat = createClassDiv("", "", "start-info-data");
+    if (activeCont.idnam == "news") {
+        titl.innerHTML = "<strong>" + JSONData.elems[0].shows[news2vid[li.focusedId]].show + "</strong>";
+        dat.innerHTML = JSONData.elems[0].shows[news2vid[li.focusedId]].descr;
+    }
+    if (activeCont.idnam == "shows") {
+        titl.innerHTML = "<strong>" + JSONData.elems[3].shows[fid2json[li.focusedId]].show + "</strong>";
+        dat.innerHTML = JSONData.elems[3].shows[fid2json[li.focusedId]].descr;
+    }
+    info.appendChild(titl);
+    info.appendChild(dat);
+    this.elem.appendChild(info);
+
+    var botover = createClassDiv("", "", "bottom-overlay");
+    this.elem.appendChild(botover);
+
+    var list = new HorizontalList("episodes-list", true);
+    list.initSideEpisodes(this.elem, "", "", title);
+
+    GLOBALS.focusmgr.focusObject("episodes-list");
+}
+Cont.prototype.initEPG = function (parent, xpos, ypos) {
+    var epgcontainer = createClassDiv("", "", "epg-container");
+    this.parent = parent;
+    parent.appendChild(epgcontainer);
+    this.baseInit(epgcontainer);
+    this.register();
+    this.buttons = [];
+
+    var me = this;
+    var url = 'http://smarttv.anixa.tv/skai_new/json/program.json';
+    this.req = createHttpRequest(url, function (ret) {
+        me.req = null;
+        var JSONData = JSON.parse(ret);
+
+        // llog(JSONData);
+        var epgday = new DaySelect("epg-dayselect");
+        epgday.init(me.elem, "", "", JSONData.elems);
+        me.buttons.push(epgday);
+    });
+}
+Cont.prototype.setFocused = function (otherobj, focus) {
+
+    for (var i = 0; i < this.buttons.length; i++) {
+        if (focus) {
+            if (i == this.focusedId) {
+                this.buttons[i].addClass("focused");
+                if (this.idnam == "bigbrother") this.fscreen.src = "img/fullscreen_active.png";
+            } else {
+                if (this.buttons[i].hasClass("focused")) this.buttons[i].removeClass("focused");
+                if (this.idnam == "bigbrother") this.fscreen.src = "img/fullscreen.png";
+            }
+        } else {
+            if (this.buttons[i].hasClass("focused")) this.buttons[i].removeClass("focused");
+            if (this.idnam == "bigbrother") this.fscreen.src = "img/fullscreen.png";
+        }
+    }
+
+}
+Cont.prototype.handleKeyPress = function (keyCode) {
+    if (keyCode === VK_RED) {
+        this.onRed();
+    }
+    if (keyCode === VK_GREEN) {
+        this.onGreen();
+
+        return true;
+    }
+    if (keyCode === VK_YELLOW) {
+        this.onYellow();
+        return true;
+    }
+    if (keyCode === VK_BLUE) {
+        this.onBlue();
+        return true;
+    }
+    switch (keyCode) {
+        case VK_LEFT:
+            if (GLOBALS.menu == "sidebar") {
+                var o = GLOBALS.focusmgr.getObject("side-bar");
+                GLOBALS.focusmgr.focusObject("submenu-" + o.focusedId, true);
+            }
+            break;
+        case VK_UP:
+            if (this.idnam == "bigbrother") break;
+            if (GLOBALS.menu != "sidebar") GLOBALS.focusmgr.focusObject("menu", true);
+            break;
+        case VK_DOWN:
+            if (this.idnam == "home-cont") {
+                GLOBALS.focusmgr.focusObject("home-list", true);
+            } else if (this.idnam == "bigbrother") {
+                GLOBALS.focusmgr.focusObject("episodes-list", true);
+            } else GLOBALS.focusmgr.focusObject("latest-list", true);
+            break;
+        case VK_ENTER:
+            if (this.idnam == "bigbrother") break;
+            if (currScene == "news") {
+                GLOBALS.scenemgr.openVideoPlayer();
+                if (!GLOBALS.focusmgr.getObject("videoplayer")) {
+
+                    GLOBALS.videoplayer = new VideoPlayer("videoplayer", "player-container", "basic-videotimer", 153, 592, true, "");
+                    GLOBALS.videoplayer.init(document.getElementsByTagName("body")[0], 0, 0);
+                }
+
+                var list = GLOBALS.focusmgr.getObject("latest-list");
+                GLOBALS.videoplayer.setSource("http://smarttv.anixa.tv/skai_new/video/" + newsarray[list.focusedId].episodes[0].key + ".mp4");
+                GLOBALS.videoplayer.start();
+            } else {
+                var sel = selectedshows[activeCont.idnam];
+                var item = JSONData.elems[sel.showindex].shows[sel.selected];
+                GLOBALS.scenemgr.openVideoPlayer();
+                if (!GLOBALS.focusmgr.getObject("videoplayer")) {
+
+                    GLOBALS.videoplayer = new VideoPlayer("videoplayer", "player-container", "basic-videotimer", 153, 592, true, "");
+                    GLOBALS.videoplayer.init(document.getElementsByTagName("body")[0], 0, 0);
+                }
+
+                var list = GLOBALS.focusmgr.getObject("latest-list");
+                GLOBALS.videoplayer.setSource("http://smarttv.anixa.tv/skai_new/video/" + item.episodes[1].key + ".mp4");
+                GLOBALS.videoplayer.start();
+            }
+            break;
+        case VK_BACK:
+            if (GLOBALS.scenemgr.sceneStack.length == 2)
+                break;
+            if (currScene == "bigbrother") {
+                var m = GLOBALS.scenemgr.top;
+                m.style.visibility = "visible";
+                document.getElementById("tvbild").style.visibility = "hidden";
+                GLOBALS.scenemgr.setRF();
+            }
+            GLOBALS.scenemgr.goBack();
+            break;
+        default:
+            break;
+    }
+}
+
+/*
+ * --- HorizontalList Object ---
+ * List show episodes, scroller etc.
+ * Functions:
+ *   - initShows: init shows
+ *   - initEpisodes: init episodes
+ *   - initSideEpisodes: init side episodes
+ *   - setFocused: set focus
+ *   - loadPoster: load show image
+ *   - animScrollerLeft: scroll left animation
+ *   - animScrollerRight :scroll right animation
+ *   - loadImageRight: load show image
+ *   - loadImageLeft:  load show image
+ *   - handleKeyPress: handle keys
+ */
+function HorizontalList(idnam, listType) {
+    this.idnam = idnam;
+    this.listType = listType;
+    this.focusedId = 0;
+    this.atstart = true;
+    this.atend = false;
+    this.current = 0;
+    this.itemmargin = 250;
+    this.focusleft = 0;
+    this.focustop = 0;
+    this.parent = null;
+    this.width = 0;
+    this.strecke = 0;
+    this.position = 110;
+    this.animtimer = false;
+    this.pixeltomove = 50;
+    this.listHeight = 250;
+    this.height = 250;
+    this.items = null;
+}
+HorizontalList.prototype = new BaseObject();
+HorizontalList.prototype.initShows = function (parent, xpos, ypos, category) {
+    this.itemmargin = 150;
+    this.position = 110;
+    if (GLOBALS.menu == "sidebar") this.position = 137;
+    this.pixeltomove = 50;
+
+    var e = createClassDiv("", "", "movies-category");
+    parent.appendChild(e);
+    this.baseInit(e);
+    this.register();
+    this.buttons = [];
+    this.parent = parent;
+
+    var cat = createClassDiv("", "", "category");
+    switch (currScene) {
+        case "news":
+            cat.innerHTML = "ΕΝΗΜΕΡΩΤΙΚΕΣ ΕΚΠΟΜΠΕΣ";
+            break;
+        case "shows":
+            cat.innerHTML = "ΨΥΧΑΓΩΓΙΚΕΣ ΕΚΠΟΜΠΕΣ";
+            break;
+    }
+    this.elem.appendChild(cat);
+
+    var w = this.itemmargin;
+
+    this.outer = createClassDiv("", "", "event-list");
+    this.elem.appendChild(this.outer);
+
+    if (currScene == "news")
+        newsarray = this.createNewsShow();
+    if (currScene == "shows")
+        newsarray = this.createShowsShow();
+
+    for (var i = 0; i < newsarray.length; i++) {
+        var inner = createClassDiv("", "", "show");
+        inner.id = "show_" + i;
+        w += this.itemmargin;
+
+        var im = document.createElement('img');
+        if (currScene == "news")
+            im.src = "img/news/" + i + ".jpg";
+        if (currScene == "shows")
+            im.src = "img/shows/" + i + ".png";
+        im.style.width = "100%";
+
+        inner.appendChild(im);
+        this.outer.appendChild(inner);
+        this.buttons[i] = inner;
+    }
+    this.outer.style.width = w + "px";
+}
+HorizontalList.prototype.createNewsShow = function () {
+    var arr = JSONData.elems[0].shows;
+    var dat = [];
+
+    for (var i = 0; i < arr.length; i++) {
+        switch (arr[i].show) {
+            case "Ειδήσεις Ι Βραδινό Δελτίο":
+                dat.push(arr[i]);
+                break;
+            case "Ειδήσεις Ι Μεσημβρινό Δελτίο":
+                dat.push(arr[i]);
+                break;
+            case "Αταίριαστοι":
+                dat.push(arr[i]);
+                break;
+            case "Αποτύπωμα":
+                dat.push(arr[i]);
+                break;
+            case "Καλημέρα":
+                dat.push(arr[i]);
+                break;
+            case "Ακραία Φαινόμενα":
+                dat.push(arr[i]);
+                break;
+            case "ECO News":
+                dat.push(arr[i]);
+                break;
+            case "Αντίστροφη Μέτρηση":
+                dat.push(arr[i]);
+                break;
+                // case "Σήμερα":
+                //     dat.push(arr[i]);
+                //     break;
+            default:
+                break;
+        }
+    }
+
+    return dat;
+}
+HorizontalList.prototype.createShowsShow = function () {
+    var arr = JSONData.elems[3].shows;
+    var dat = [];
+
+    for (var i = 0; i < arr.length; i++) {
+        switch (arr[i].show) {
+            case "Μεσημέρι με τον Γιώργο Λιάγκα":
+                dat.push(arr[i]);
+                break;
+            case "Καλό Μεσημεράκι":
+                dat.push(arr[i]);
+                break;
+            case "My Style Rocks":
+                dat.push(arr[i]);
+                break;
+            case "Ο Πιο Αδύναμος Κρίκος":
+                dat.push(arr[i]);
+                break;
+            case "After Dark":
+                dat.push(arr[i]);
+                break;
+            case "Guess My Age":
+                dat.push(arr[i]);
+                break;
+            case "Boom":
+                dat.push(arr[i]);
+                break;
+            case "Eurogames":
+                dat.push(arr[i]);
+                break;
+            default:
+                break;
+        }
+    }
+
+    return dat;
+}
+HorizontalList.prototype.initEpisodes = function (parent, xpos, ypos, category) {
+    this.itemmargin = 280;
+    this.position = 110;
+    if (GLOBALS.menu == "sidebar") this.position = 137;
+    this.pixeltomove = 70;
+
+    var e = createClassDiv("", "", "movies-category");
+    parent.appendChild(e);
+    this.baseInit(e);
+    this.register();
+    this.buttons = [];
+    this.parent = parent;
+
+    var cat = createClassDiv("", "", "category");
+    if (currScene == "home-cont") cat.innerHTML = "ΜΗ ΧΑΣΕΙΣ";
+    if (currScene == "bigbrother") cat.innerHTML = category;
+    this.elem.appendChild(cat);
+
+    var w = this.itemmargin;
+
+    this.outer = createClassDiv("", "", "event-list");
+    this.elem.appendChild(this.outer);
+
+    if (currScene == "bigbrother")
+        for (var i = 0; i < 10; i++) {
+            var inner = createClassDiv("", "", "episode");
+            // inner.id = JSONData.elems[i].shows[j].episodes[0].key;
+            w += this.itemmargin;
+
+            inner.style.backgroundColor = "#ffffff";
+
+            var titl = createClassDiv("", "", "bb-ep-titl");
+            titl.innerHTML = "<strong> ΕΠΕΙΣΟΔΙΟ " + i + "</strong> -" + " 24/1/2020";
+
+            inner.appendChild(titl);
+            this.outer.appendChild(inner);
+            this.buttons.push(inner);
+        }
+    else
+        for (var i = 0; i < JSONData.elems.length; i++)
+            if (i != 2)
+                for (var j = 0; j < JSONData.elems[i].shows.length; j++) {
+                    var inner = createClassDiv("", "", "episode");
+                    inner.id = JSONData.elems[i].shows[j].episodes[0].key;
+                    w += this.itemmargin;
+
+                    var im = document.createElement('img');
+                    im.src = JSONData.elems[i].shows[j].episodes[0].img;
+                    var titl = createClassDiv("", "", "event-titl");
+                    titl.innerHTML = "<strong>" + JSONData.elems[i].shows[j].episodes[0].title + "</strong>";
+
+                    inner.appendChild(im);
+                    inner.appendChild(titl);
+                    this.outer.appendChild(inner);
+                    this.buttons.push(inner);
+                }
+    this.elem.style.width = w + "px";
+}
+HorizontalList.prototype.initSideEpisodes = function (parent, xpos, ypos, category) {
+    this.itemmargin = 280;
+    this.position = 0;
+    this.pixeltomove = 70;
+
+    var e = createClassDiv("", "", "movies-category");
+    e.style.left = "585px";
+    parent.appendChild(e);
+    this.baseInit(e);
+    this.register();
+    this.buttons = [];
+    this.parent = parent;
+
+    var cat = createClassDiv("", "", "category");
+    cat.style.left = "0px";
+    cat.innerHTML = "ΕΠΕΙΣΟΔΙΑ";
+    this.elem.appendChild(cat);
+
+    var w = this.itemmargin;
+
+    this.outer = createClassDiv("", "", "event-list");
+    this.outer.style.left = "0px";
+    this.elem.appendChild(this.outer);
+
+    if (currScene == "news")
+        newsarray = this.createNewsShow();
+    if (currScene == "shows")
+        newsarray = this.createShowsShow();
+
+    var sh = newsarray[newsShowId].episodes,
+        j = 0;
+    for (var i = 0; i < sh.length; i++) {
+        if (!sh[i].ok)
+            continue;
+        var inner = createClassDiv("", "", "episode");
+        inner.id = sh[i].key;
+        w += this.itemmargin;
+
+        var im = document.createElement('img');
+        im.src = sh[i].img;
+        im.style.width = "100%";
+
+        var titl = createClassDiv("", "", "event-titl");
+        /* position: relative; */
+        titl.innerHTML = "<strong>" + sh[i].title.toUpperCase() + "</strong>";
+
+        inner.appendChild(im);
+        inner.appendChild(titl);
+        this.outer.appendChild(inner);
+        this.buttons.push(inner);
+    }
+    // } else
+    //     for (var i = 0; i < 5; i++) {
+    //         var inner = createClassDiv("", "", "episode");
+    //         inner.id = "episode_" + i;
+    //         w += this.itemmargin;
+
+    //         var im = document.createElement('img');
+    //         im.src = "img/episode.png";
+    //         // var titl = createClassDiv("", "", "event-titl");
+    //         // titl.innerHTML = this.items[i].show;
+
+    //         inner.appendChild(im);
+    //         // inner.appendChild(titl);
+    //         this.outer.appendChild(inner);
+    //         this.buttons[i] = inner;
+    //     }
+    this.elem.style.width = w + "px";
+}
+HorizontalList.prototype.setFocused = function (otherobj, focus) {
+
+    for (var i = 0; i < this.buttons.length; i++) {
+        if (focus) {
+            if (i == this.focusedId) {
+                this.buttons[i].addClass("focused");
+            } else {
+                if (this.buttons[i].hasClass("focused")) this.buttons[i].removeClass("focused");
+            }
+        } else {
+            if (this.buttons[i].hasClass("focused")) this.buttons[i].removeClass("focused");
+        }
+    }
+
+}
+HorizontalList.prototype.loadPoster = function (image, item) {
+    var imgElem = document.createElement("img");
+    imgElem.src = image;
+    item.appendChild(imgElem);
+}
+HorizontalList.prototype.animScrollerLeft = function () {
+    if (this.strecke >= this.itemmargin) {
+        clearTimeout(this.animtimer);
+        this.animtimer = false;
+        this.strecke = 0;
+        this.setFocused(this.idnam, true);
+
+    } else {
+        this.position = this.position + this.pixeltomove;
+        this.strecke = this.strecke + this.pixeltomove;
+        this.outer.style.left = this.position + 'px';
+        var me = this;
+        this.animtimer = setTimeout(function () {
+            me.animScrollerLeft();
+        }, 40);
+    }
+
+}
+HorizontalList.prototype.animScrollerRight = function () {
+
+    if (this.strecke >= this.itemmargin) {
+        clearTimeout(this.animtimer);
+        this.animtimer = false;
+        this.strecke = 0;
+
+        this.setFocused(this.idnam, true);
+
+    } else {
+        this.position = this.position - this.pixeltomove;
+        this.strecke = this.strecke + this.pixeltomove;
+
+        this.outer.style.left = this.position + 'px';
+        var me = this;
+        this.animtimer = setTimeout(function () {
+            me.animScrollerRight();
+        }, 40);
+    }
+
+}
+HorizontalList.prototype.loadImageRight = function () {
+    var k = this.focusedId;
+    if (this.buttons[k - 2]) {
+        this.buttons[k - 2].getElementsByClassName("poster")[0].innerHTML = "";
+    }
+    if (this.buttons[k + 10]) {
+        var image = this.buttons[k + 10].getElementsByClassName("posterUrl")[0].innerHTML;
+        var item = this.buttons[k + 10].getElementsByClassName("poster")[0];
+        this.loadPoster(image, item);
+    }
+}
+HorizontalList.prototype.loadImageLeft = function () {
+    var k = this.focusedId;
+    if (this.buttons[k + 10]) {
+        this.buttons[k + 10].getElementsByClassName("poster")[0].innerHTML = "";
+    }
+    if (this.buttons[k - 2]) {
+        var image = this.buttons[k - 2].getElementsByClassName("posterUrl")[0].innerHTML;
+        var item = this.buttons[k - 2].getElementsByClassName("poster")[0];
+        this.loadPoster(image, item);
+    }
+}
+HorizontalList.prototype.handleKeyPress = function (keyCode) {
+
+    if (keyCode === VK_RED) {
+        this.onRed();
+    }
+    if (keyCode === VK_GREEN) {
+        this.onGreen();
+
+        return true;
+    }
+    if (keyCode === VK_YELLOW) {
+        this.onYellow();
+        return true;
+    }
+    if (keyCode === VK_BLUE) {
+        this.onBlue();
+        return true;
+    }
+    switch (keyCode) {
+        case VK_UP:
+        	if(GLOBALS.focusmgr.getObject("search-results-list")){
+        		GLOBALS.focusmgr.focusObject("keyboard-buttons");
+        		break;
+        	}
+            if (activeCont.idnam == "episodes")
+                GLOBALS.focusmgr.focusObject("menu");
+            else
+                // GLOBALS.focusmgr.focusObject(activeCont.idnam);
+                if (activeCont.idnam == "home-cont") {
+                    GLOBALS.focusmgr.focusObject("home-cont", true);
+                } else GLOBALS.focusmgr.focusObject(activeCont.idnam, true);
+            break;
+        case VK_RIGHT:
+        	if (this.animtimer) break;
+            this.focusedId++;
+            if (this.focusedId > this.buttons.length - 1) {
+                this.focusedId = this.buttons.length - 1;
+                break;
+            }
+            newsShowId = this.focusedId;
+
+            this.animScrollerRight();
+            break;
+        case VK_LEFT:
+            if (this.animtimer) break;
+            this.focusedId--;
+            if (this.focusedId < 0) {
+                this.focusedId = 0;
+                if (GLOBALS.menu == "sidebar") {
+                    var o = GLOBALS.focusmgr.getObject("side-bar");
+                    GLOBALS.focusmgr.focusObject("submenu-" + o.focusedId, true);
+                }
+                break;
+            }
+            newsShowId = this.focusedId;
+            this.animScrollerLeft();
+            break;
+        case VK_ENTER:
+       
+            if (this.listType || GLOBALS.focusmgr.getObject("search-results-list")) {
+                
+                GLOBALS.scenemgr.openVideoPlayer();
+                if (!GLOBALS.focusmgr.getObject("videoplayer")) {
+
+                    GLOBALS.videoplayer = new VideoPlayer("videoplayer", "player-container", "basic-videotimer", 153, 592, true, "");
+                    GLOBALS.videoplayer.init(document.getElementsByTagName("body")[0], 0, 0);
+                }
+
+                GLOBALS.videoplayer.setSource("http://smarttv.anixa.tv/skai_new/video/" + this.buttons[this.focusedId].id + ".mp4");
+                GLOBALS.videoplayer.start();
+            } else {
+            	
+                var cont = GLOBALS.focusmgr.getObject("skai");
+                cont.createEpisodes();
+            }
+            break;
+        case VK_BACK:
+            if (GLOBALS.scenemgr.sceneStack.length == 2)
+                break;
+            if (currScene == "bigbrother") {
+                var m = GLOBALS.scenemgr.top;
+                m.style.visibility = "visible";
+                document.getElementById("tvbild").style.display = "block";
+                GLOBALS.scenemgr.setRF();
+            }
+            GLOBALS.scenemgr.goBack();
+            break;
+        default:
+            break;
+    }
+}
+
+/*
+ * --- EPGList Object ---
+ * Display EPG
+ * Functions: 
+ *   - init: init EPG
+ *   - setFocused: set focus
+ *   - animScrollerUp: scroll up animation
+ *   - animScrollerDown: scroll down animation
+ *   - handleKeyPress: handle keys
+ */
+
+function EPGList(idnam) {
+    this.idnam = idnam;
+    this.focusedId = 1;
+    this.position = 0;
+    this.itemheight = 110;
+    this.strecke = 0;
+    this.pixeltomove = 55;
+    this.animtimer = false;
+}
+EPGList.prototype = new BaseObject();
+EPGList.prototype.init = function (parent, xpos, ypos, data) {
+
+    var e = createClassDiv("", "", "epg-list");
+    parent.appendChild(e);
+    this.baseInit(e);
+    this.register();
+    this.buttons = [];
+    this.parent = parent;
+
+    // llog(data);
+
+    var h = this.position;
+    for (var i = 0; i < data.length; i++) {
+        inner = createClassDiv("", "", "epg-list-item");
+        inner.id = "event_" + i;
+        h += this.itemheight;
+
+        var evttime = createClassDiv("", "", "epg-event-time");
+        evttime.innerHTML = data[i].hour;
+        var evtimg = createClassDiv("", "", "epg-event-image");
+        var img = document.createElement('img');
+        img.id = "evtimg" + i;
+        img.src = data[i].img;
+        evtimg.appendChild(img);
+        var evtinf = createClassDiv("", "", "epg-info");
+        if (data[i].rating) {
+            var evtrat = createClassDiv("", "", "epg-event-rating");
+            var im = document.createElement('img');
+            im.src = data[i].rating;
+            evtrat.appendChild(im);
+            evtinf.appendChild(evtrat);
+        }
+        var evttitle = createClassDiv("", "", "epg-event-title");
+        evttitle.innerHTML = data[i].title;
+        evtinf.appendChild(evttitle);
+        var evtdescr = createClassDiv("", "", "epg-event-descr");
+        evtdescr.id = "evtdescr" + i;
+        evtdescr.innerHTML = data[i].descr;
+        evtdescr.innerHTML = evtdescr.innerHTML.substring(0, 310);
+        evtinf.appendChild(evtdescr);
+
+
+        inner.appendChild(evttime);
+        inner.appendChild(evtimg);
+        inner.appendChild(evtinf);
+
+        e.appendChild(inner);
+        this.buttons[i] = inner;
+    }
+    this.elem.style.height = h + "px";
+}
+EPGList.prototype.setFocused = function (otherobj, focus) {
+    for (var i = 0; i < this.buttons.length; i++) {
+        var d = document.getElementById("evtdescr" + i);
+        if (focus) {
+            if (i == this.focusedId) {
+                this.buttons[i].addClass("focused");
+                d.style.visibility = "visible";
+            } else {
+                this.buttons[i].removeClass("focused");
+                d.style.visibility = "hidden";
+            }
+        } else {
+            this.buttons[i].removeClass("focused");
+            d.style.visibility = "hidden";
+        }
+    }
+    return true;
+}
+EPGList.prototype.animScrollerUp = function () {
+    if (this.strecke >= this.itemheight) {
+        clearTimeout(this.animtimer);
+        this.animtimer = false;
+        this.strecke = 0;
+        this.setFocused(this.idnam, true);
+
+    } else {
+        this.position = this.position + this.pixeltomove;
+        this.strecke = this.strecke + this.pixeltomove;
+        this.elem.style.top = this.position + 'px';
+        var me = this;
+        this.animtimer = setTimeout(function () {
+            me.animScrollerUp();
+        }, 40);
+    }
+}
+EPGList.prototype.animScrollerDown = function () {
+    if (this.strecke >= this.itemheight) {
+        clearTimeout(this.animtimer);
+        this.animtimer = false;
+        this.strecke = 0;
+
+        this.setFocused(this.idnam, true);
+
+    } else {
+
+        this.position = this.position - this.pixeltomove;
+        this.strecke = this.strecke + this.pixeltomove;
+
+        this.elem.style.top = this.position + 'px';
+        var me = this;
+        this.animtimer = setTimeout(function () {
+            me.animScrollerDown();
+        }, 40);
+    }
+}
+EPGList.prototype.handleKeyPress = function (keycode) {
+    switch (keycode) {
+        case VK_LEFT:
+            if (GLOBALS.menu == "sidebar") {
+                var o = GLOBALS.focusmgr.getObject("side-bar");
+                GLOBALS.focusmgr.focusObject("submenu-" + o.focusedId, true);
+            }
+            break;
+        case VK_DOWN:
+            if (this.animtimer) break;
+            this.focusedId++;
+            if (this.focusedId > this.buttons.length - 1) this.focusedId = this.buttons.length - 1;
+            else this.animScrollerDown();
+            this.setFocused(this.idnam, true);
+            break;
+        case VK_UP:
+            if (this.animtimer) break;
+            this.focusedId--;
+            if (this.focusedId < 0) {
+                this.focusedId = 0;
+                GLOBALS.focusmgr.focusObject("epg-dayselect");
+                break;
+            } else
+                this.animScrollerUp();
+            this.setFocused(this.idnam, true);
+            break;
+        case VK_BACK:
+            GLOBALS.focusmgr.focusObject("epg-dayselect");
+            break;
+        default:
+            break;
+    }
+}
+
+/*
+ * --- DaySelect Object ---
+ * Display days for EPG
+ * Functions:
+ *   - init: init days selction for EPG
+ *   - setFocused: set focus
+ *   - setActive: set active day
+ *   - createWeek: not used
+ *   - weekDates: not used
+ *   - handleKeyPress: handle keys
+ */
+
+function DaySelect(idnam) {
+    this.idnam = idnam;
+    this.focusedId = 1;
+}
+
+DaySelect.prototype = new BaseObject();
+DaySelect.prototype.init = function (parent, xpos, ypos, days) {
+    var dayselect = createClassDiv("", "", "epg-day-select");
+    parent.appendChild(dayselect);
+    this.baseInit(dayselect);
+    this.register();
+    this.buttons = [];
+    this.days = days;
+
+
+    for (var i = 0; i < days.length; i++) {
+        var dayitem = createClassDiv("", "", "epg-day-item");
+        var res = days[i].date.split(" ");
+        dayitem.innerHTML = "<strong>" + res[0] + "</strong> <br></br>" + res[1];
+        dayselect.appendChild(dayitem);
+
+        this.buttons[i] = dayitem;
+    }
+
+    this.setActive(this.buttons[1], true);
+
+    var me = GLOBALS.focusmgr.getObject("epg");
+    var cont = createClassDiv("", "", "epg-content");
+
+    me.elem.appendChild(cont);
+
+    var list = new EPGList("epg-list");
+    list.init(cont, "", "", days[1].shows);
+    me.buttons.push(list);
+    GLOBALS.focusmgr.focusObject("epg-list");
+}
+DaySelect.prototype.setFocused = function (otherobj, focus) {
+    for (var i = 0; i < this.buttons.length; i++) {
+        if (focus) {
+            if (i == this.focusedId) this.buttons[i].addClass("focused");
+            else this.buttons[i].removeClass("focused");
+        } else this.buttons[i].removeClass("focused");
+    }
+    return true;
+}
+DaySelect.prototype.setActive = function (otherobj, focus) {
+    for (var i = 0; i < this.buttons.length; i++) {
+        if (focus) {
+            if (i == this.focusedId) this.buttons[i].addClass("active");
+            else this.buttons[i].removeClass("active");
+        } else this.buttons[i].removeClass("active");
+    }
+    return true;
+}
+DaySelect.prototype.createWeek = function (day) {
+    var days = ["ΚΥΡΙΑΚΗ", "ΔΕΥΤΕΡΑ", "ΤΡΙΤΗ", "ΤΕΤΑΡΤΗ", "ΠΕΜΠΤΗ", "ΠΑΡΑΣΚΕΥΗ", "ΣΑΒΒΑΤΟ"];
+    var newdays = [];
+
+    newdays.push(days[day]);
+    for (var i = day; i < days.length; i++) {
+        if (i != day) {
+            newdays.push(days[i]);
+        }
+
+    }
+    for (var i = 0; i < day; i++) {
+        if (i != day) {
+            newdays.push(days[i]);
+        }
+
+    }
+    return newdays;
+}
+DaySelect.prototype.weekDates = function (today) {
+    var weekdates = [];
+
+    for (var i = 0; i < 7; i++) {
+        var newDate = new Date(today.getTime() + i * 86400000);
+        var day = newDate.getDate();
+        var month = newDate.getMonth() + 1;
+
+        var wdat = day + " / " + month;
+        weekdates.push(wdat);
+    }
+
+    return weekdates;
+}
+DaySelect.prototype.handleKeyPress = function (keycode) {
+    switch (keycode) {
+        case VK_RIGHT:
+            this.focusedId++;
+            if (this.focusedId > this.buttons.length - 1) {
+                this.focusedId = this.buttons.length - 1;
+            }
+            this.setFocused(this.idnam, true);
+            break;
+        case VK_LEFT:
+            this.focusedId--;
+            if (this.focusedId < 0) {
+                this.focusedId = 0;
+                if (GLOBALS.menu == "sidebar") {
+                    var o = GLOBALS.focusmgr.getObject("side-bar");
+                    GLOBALS.focusmgr.focusObject("submenu-" + o.focusedId, true);
+                }
+                break;
+            }
+            this.setFocused(this.idnam, true);
+            break;
+        case VK_DOWN:
+            GLOBALS.focusmgr.focusObject("epg-list");
+            break;
+        case VK_UP:
+            if (GLOBALS.menu != "sidebar") GLOBALS.focusmgr.focusObject("menu");
+            break;
+        case VK_ENTER:
+            this.setActive(this.idnam, true);
+
+            if (GLOBALS.focusmgr.getObject("epg-list")) {
+                var o = GLOBALS.focusmgr.getObject("epg-list");
+                o.unregister();
+                document.getElementsByClassName("epg-content")[0].removeChild(o.elem);
+                var e = new EPGList("epg-list");
+                e.init(document.getElementsByClassName("epg-content")[0], 0, 0, this.days[this.focusedId].shows);
+                GLOBALS.focusmgr.focusObject("epg-list");
+            }
+            break;
+        case VK_BACK:
+            GLOBALS.scenemgr.goBack();
+            break;
+        default:
+            break;
+    }
+}

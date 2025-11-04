@@ -1,0 +1,752 @@
+#appscreen {
+    background: none !important;
+    background-color: black !important;
+}
+
+.scene-container {
+    height: 720px !important;
+}
+
+.skai-list {
+    width: 1280px;
+    height: 720px;
+    top: 0px;
+    z-index: 10;
+}
+
+.top-container {
+    width: 100%;
+    height: 260px;
+    z-index: 1;
+}
+
+
+#tvbild.rf-div {
+    position: absolute !important;
+    visibility: visible !important;
+    width: 400px !important;
+    height: 225px !important;
+    top: 35px !important;
+    right: 63px !important;
+}
+
+#tvbild.rf-div #mybroadcast {
+    position: absolute !important;
+    top: 0px !important;
+    left: 0px !important;
+    z-index: 15 !important;
+    /*width: inherit!important;
+    height: inherit!important;*/
+    width: 400px !important;
+    height: 225px !important;
+}
+
+#tvbild.rf-div #mybroadcast #video-player {
+    position: absolute !important;
+    top: inherit !important;
+    left: inherit !important;
+    /*width: inherit!important;
+    height: inherit!important;
+    */
+    width: 400px !important;
+    height: 225px !important;
+}
+
+.skai-menu {
+    width: 760px;
+    height: 50px;
+    left: 60px;
+    top: 35px;
+    background-image: linear-gradient(rgba(10, 36, 110, 1), rgba(10, 36, 110, 0));
+    padding-top: 5px;
+}
+
+
+.skai-menu .menu-item {
+    position: relative;
+    float: left;
+    padding: 7px;
+    color: #eeeeee;
+    font-size: 17px;
+    border-right: 1px solid #eeeeee;
+    height: 25px;
+}
+
+.skai-menu .menu-icon {
+    position: relative;
+    float: left;
+    margin-left: 5px;
+    color: #eeeeee;
+    font-size: 17px;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+}
+
+.skai-menu .menu-item.focused {
+    background-color: #050553 !important;
+    border-right: 2px solid #eeeeee;
+    border-left: 2px solid #eeeeee;
+}
+
+.skai-menu .menu-item.active {
+    background-color: rgba(244, 244, 244, 0.25);
+}
+
+.skai-menu .menu-icon.focused {
+    background-color: #050553 !important;
+}
+
+.skai-menu .menu-icon.active {
+    background-color: rgba(244, 244, 244, 0.25);
+}
+
+.list-container {
+    width: 100%;
+    height: 100%;
+}
+
+.start-info {
+    width: 415px;
+    height: 210px;
+    top: 250px;
+    left: 110px;
+    z-index: 1;
+}
+
+.start-info.epinfo {
+    height: 415px;
+}
+
+.start-info-title {
+    position: relative;
+    font-size: 25px;
+    color: #eeeeee;
+    text-shadow: 2px 2px black;
+}
+
+.start-info-data {
+    position: relative;
+    font-size: 15px;
+    color: #eeeeee;
+    text-shadow: 1px 1px black;
+}
+
+.info-play {
+    padding: 5px;
+    color: black;
+    background-color: #eeeeee;
+    font-size: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+    border: solid 3px transparent;
+}
+
+.info-play.focused {
+    border: solid 5px #050553 !important;
+}
+
+.bottom-overlay {
+    clear: both;
+    float: left;
+    height: 360px;
+    width: 100%;
+    top: 360px;
+    background-image: linear-gradient(rgba(10, 36, 110, 0), rgba(10, 36, 110, 1));
+}
+
+.movies-category {
+    clear: both;
+    float: left;
+    height: 220px;
+    width: 100%;
+    top: 465px;
+}
+
+.movies-category .event-list {
+    height: 220px;
+    top: 35px;
+    left: 110px;
+}
+
+.movies-category .category {
+    color: #eeeeee;
+    font-size: 25px;
+    padding-right: 5px;
+    left: 110px;
+    text-shadow: 2px 2px black;
+}
+
+.movies-category .category.active {
+    transform: scale(1.5);
+    left: 310px;
+    border-bottom: solid 5px transparent;
+}
+
+.movies-category .episode {
+    width: 260px;
+    height: 146px;
+    /* background-color: #514f4f; */
+    position: relative;
+    float: left;
+    margin: 5px;
+    border: solid 5px transparent;
+}
+
+.movies-category .event-list .episode.focused {
+    border: solid 8px #eeeeee !important;
+    opacity: 1;
+}
+
+.movies-category .show {
+    width: 130px;
+    height: 175px;
+    /* background-color: #514f4f; */
+    position: relative;
+    float: left;
+    margin-right: 10px;
+    border: solid 5px transparent;
+}
+
+.movies-category .event-list .show.focused {
+    border: solid 5px #eeeeee !important;
+    opacity: 1;
+}
+
+
+.movies-category .episode img {
+    width: 100%;
+    height: auto;
+}
+
+.movies-category .episode .event-titl {
+    font-size: 17px;
+    color: #eeeeee;
+    bottom: 0px;
+    text-align: center;
+    width: inherit;
+    background-image: linear-gradient(rgba(10, 36, 110, 0), rgba(10, 36, 110, 1));
+    padding-bottom: 5px;
+}
+
+.triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 75px solid transparent;
+    border-right: 75px solid transparent;
+    border-top: 15px solid #eeeeee;
+    top: 0px;
+    left: 45px;
+}
+
+/*================================= Big Brother =======================================*/
+
+.bb-container {
+    width: 100%;
+    height: 100%;
+}
+
+.bb-stream {
+    width: 791px;
+    height: 445px;
+    left: 489px;
+    top: 0px;
+    background-color: black;
+}
+
+.bb-stream img {
+    position: absolute;
+    top: 412px;
+}
+
+.bb-logo {
+    width: 405px;
+    height: 365px;
+    top: 35px;
+    left: 65px;
+}
+
+.bb-logo img {
+    width: 100%;
+}
+
+.bb-ep-titl {
+    font-size: 15px;
+    color: #eeeeee;
+    bottom: 0px;
+    text-align: center;
+    width: inherit;
+    background-image: linear-gradient(rgba(10, 36, 110, 0), rgba(10, 36, 110, 1));
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.bb-container .movies-category .event-list .episode.focused {
+    border: solid 8px lightblue !important;
+    opacity: 1;
+}
+
+
+/*================================= video Loader =======================================*/
+.loader {
+    border: 5px solid transparent;
+    position: relative;
+    margin: 20px;
+    border-radius: 50%;
+    border-top: 5px solid #eeeeee;
+    border-bottom: 5px solid #eeeeee;
+    width: 50px;
+    height: 50px;
+    -webkit-animation: spin 0.75s linear infinite;
+    animation: spin 0.75s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/*================================= Privacy =======================================*/
+
+.privacy-detail {
+    height: 100%;
+    width: 1170px;
+    background-color: rgb(2, 17, 72);
+    left: 110px;
+    padding: 10px;
+}
+
+.privacy-title-label {
+    color: #eeeeee;
+    font-size: 25px;
+    position: relative;
+    font-weight: bold;
+    border-bottom: solid;
+    top: 95px;
+}
+
+.privacy-cont {
+    position: relative;
+    top: 100px;
+    width: 1080px;
+    height: 570px;
+}
+
+.privacy-data {
+    color: rgb(238, 238, 238);
+    font-size: 17px;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+/*================================= EPG =======================================*/
+
+.epg-container {
+    height: 100%;
+    width: 100%;
+    background-image: url(../img/epg-bg.jpg);
+}
+
+.epg-content {
+    /* position: relative; */
+    top: 165px;
+    left: 65px;
+    width: 1150px;
+}
+
+.epg-list {
+    position: relative;
+}
+
+.epg-list-item {
+    width: 100%;
+    height: 100px;
+    position: relative;
+    margin-top: 10px;
+}
+
+.epg-list-item.focused {
+    background-color: rgba(10, 10, 100, 0.5);
+    border-left: solid 10px #ffe999;
+    height: 120px;
+}
+
+.epg-list-item.focused .epg-event-title,
+.epg-list-item.focused .epg-event-descr {
+    color: #ffe999;
+}
+
+.epg-list-item.focused .epg-event-time {
+    border-bottom: solid 1px transparent;
+}
+
+.epg-event-time {
+    position: relative;
+    color: #eeeeee;
+    padding: 35px 0px 35px 35px;
+    float: left;
+    font-size: 20px;
+    margin-right: 50px;
+    border-bottom: solid 1px #eeeeee;
+}
+
+.epg-event-image {
+    position: relative;
+    height: inherit;
+    float: left;
+}
+
+.epg-event-image img {
+    width: auto;
+    height: inherit;
+}
+
+.epg-info {
+    height: inherit;
+    position: relative;
+    padding: 10px;
+}
+
+.epg-event-title {
+    color: #eeeeee;
+    position: relative;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.epg-event-descr {
+    color: #eeeeee;
+    position: relative;
+    font-size: 15px;
+    visibility: hidden;
+}
+
+.epg-event-rating {
+    position: relative;
+    padding-top: 10px;
+    float: left;
+}
+
+.epg-event-rating img {
+    width: 20px;
+    height: 20px;
+}
+
+.epg-day-select {
+    top: 100px;
+    left: 65px;
+}
+
+.epg-day-item {
+    width: 70px;
+    height: auto;
+    position: relative;
+    float: left;
+    margin: 15px;
+    color: #eeeeee;
+    text-align: center;
+    font-size: 17px;
+}
+
+.epg-day-item.focused {
+    border-bottom: solid 5px #ffe999 !important;
+}
+
+.epg-day-item.active {
+    border-bottom: solid 5px #eeeeee;
+
+}
+
+.epg-day-txt {
+    color: #eeeeee;
+    height: 50%;
+    position: relative;
+    text-align: center;
+    padding-top: 1px;
+}
+
+/*================================= search =======================================*/
+
+.input-container {
+    width: 750px;
+    height: 35px;
+    line-height:35px;
+    left: 65px !important;
+    top: 130px !important;
+	background:rgba(255, 255, 255, 0.2); 
+}
+
+.input-div {
+    height: 30px;
+    border-right: solid 2px #0e2472;
+    line-height:30px;
+    top:3px!important;
+}
+
+.input-div span {
+    padding: 5px;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+}
+
+.keyboard-container {
+    width: 1153px;
+    height: 300px;
+    top: 195px !important;
+}
+
+.keyboard-tab-container {
+    width: 95%;
+    height: 80%;
+}
+
+.letters-div {
+    width: 701px;
+    height: 100%;
+}
+
+.letters-div div.outer.focused {
+    border:solid 2px white;
+}
+
+.letters-div div.outer {
+    position: relative;
+    float: left;
+    width: 57px;
+    height: 40px;
+    line-height:40px;
+    text-align: center;
+   	margin: 1px;
+	background: rgba(255, 255, 255, 0.2); 
+	color: white;
+	border: solid 2px transparent;
+}
+
+.letters-div div.outer.focused {
+	border:solid 2px white;
+}
+
+.letters-div div.outer span {
+    width: 100%;
+    height: 100%;
+    font-size: 25px;
+    font-weight: bold;
+    position: relative;
+    color: white;
+}
+
+.letters-div div.outer {
+    text-align: center;
+}
+
+.keyboard-btn-container div {
+    position: relative;
+    clear: both;
+    float: left;
+}
+
+.keyboard-btn-container div img {
+    width: 40px;
+    height: auto;
+}
+
+.results-container {
+    top: 471px !important;
+}
+
+.search {
+    height: 1200px !important;
+}
+
+.input-header{
+	top: 90px;
+	color: white;
+	left: 64px;
+	font-weight: bold;
+}
+
+.results-header{
+	color: white;
+font-weight: bold;
+top: 435px;
+left: 64px;
+}
+
+.search-results{
+	height:220px;
+}
+
+.horizontal .event-list{
+	height:100%;
+	width:100%;
+}
+
+.horizontal .event-list .episode{
+	width: 260px;
+height: 146px;
+background-color: #514f4f;
+position: relative;
+float: left;
+border: solid 5px transparent;
+margin:5px;
+}
+
+.horizontal .event-list .episode img{
+	width:100%;
+	height:auto;
+}
+
+.horizontal .event-list .episode .event-titl {
+    font-size: 17px;
+    color: #eeeeee;
+    bottom: 0px;
+    text-align: center;
+    width: inherit;
+    background-image: linear-gradient(rgba(10, 36, 110, 0), rgba(10, 36, 110, 1));
+    padding-bottom: 5px;
+font-size: 17px;
+color: #eeeeee;
+text-align: center;
+}
+
+.horizontal .event-list .episode.focused{
+	border: solid 5px white;
+}
+
+/***************/
+
+
+/*================================= Side Bar =======================================*/
+
+
+.sidebar {
+    width: 105px;
+    height: 720px;
+    background-color: rgb(10, 36, 110);
+    z-index: 2;
+}
+
+.sidebar .inner {
+    position: relative;
+    clear: both;
+    float: left;
+    width: 181px;
+    height: 400px;
+
+    margin-bottom: 40px;
+}
+
+.sidebar .submenu .inner .text {
+    visibility: hidden;
+}
+
+.sidebar.open .submenu .inner .text {
+    visibility: visible !important;
+}
+
+.sidebar .inner.focused {
+    height: 420px;
+}
+
+.sidebar .inner img {
+    width: 100px;
+    height: auto;
+}
+
+.sidebar .submenu {
+    width: 180px;
+    height: 400px !important;
+}
+
+.sidebar .submenu .inner {
+    height: 30px;
+    color: white;
+    font-size: 17px;
+    margin-bottom: 20px;
+    border-bottom: solid 8px transparent;
+}
+
+.sidebar .submenu .inner.focused {
+    border-bottom: solid 8px #ffe999;
+}
+
+.sidebar .submenu .inner div {
+    position: relative;
+    float: left;
+    margin-right: 10px;
+}
+
+.sidebar .submenu .inner .text {
+    font-size: 20px;
+    color: white;
+}
+
+.sidebar .submenu .inner.focused .text {
+    font-weight: bold;
+}
+
+div.menuelemicon {
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/icons.png);
+}
+
+div.menuelemicon.home {
+    background-position: 0px -110px;
+}
+
+div.menuelemicon.srch {
+    background-position: 0px -260px;
+}
+
+div.menuelemicon.time {
+    background-position: 0px -140px;
+}
+
+div.menuelemicon.topic {
+    background-position: 0px -200px;
+}
+
+#appscreen.v2 .movies-category .category {
+    left: 137px !important;
+}
+
+#appscreen.v2 .movies-category .event-list {
+    left: 137px;
+}
+
+#appscreen.v2 .start-info {
+    left: 137px;
+}
+
+#appscreen.v2 .start-info.epinfo {
+    left: 137px;
+}
+
+#appscreen.v2 .epg-day-select {
+    left: 125px !important;
+    top: 65px !important;
+}
+
+#appscreen.v2 .epg-content {
+    left: 180px !important;
+    top: 157px !important;
+}
+
+/***************/

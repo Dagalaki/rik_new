@@ -1,0 +1,361 @@
+loadstart
+HbbTV/1.4.1 firetv-firefox-plugin 1.3.20
+Init session vplayer
+Load HTML5 videoplayer
+VideoPlayerHTML5 - Constructor
+Initialized videodiv
+Error at clearVideo()
+undefined
+videoplayer was successfully initialized, element id: videodiv
+Add player component
+html5 video object created
+License cleared:oipfDrm is null
+setAdBreaks(
+setURL(http://skaitvhybrid1.skai.gr/2_Do-Not-Delete_Shows/Pantheoi/S00133095_PANTHEOI_S01E095x.mp4)
+Clear DRM License, time: 2024-06-14T17:01:17
+loadstart
+suspend
+canplay
+[VideoPlayerHTML5.prototype.startVideo]
+startVideo(), Οι Πανθέοι | Επεισόδιο 95 | 08/06/2024
+error stopping broadcast
+Current broadcast.playState=0
+Set oipf Active DRM
+[helper setOIPFActiveDRM]
+[helper setOIPFActiveDRM] item:
+[object Object]
+Create DRM agent
+setActiveDRM(playready), urn:dvb:casystemid:19219, retval=drmAgent.setActiveDRM is not a function
+send license acquisition request
+Send DRM License, time: 2024-06-14T17:01:18
+[sendLicenseRequest] final la url is: https://drm.anixe.net/playreadyserver/rightsmanager.asmx
+drm system of device is:
+undefined
+sendLicenseRequest type: application/vnd.ms-playready.initiator xml, sysId: urn:dvb:casystemid:19219
+sendLicenseRequest Error 3: this.oipfDrm.sendDRMMessage is not a function
+vplayer navigate keycode
+undefined
+Clear DRM License, time: 2024-06-14T17:01:19
+License cleared:undefined
+Error at clearVideo()
+abort
+emptied
+loadstart
+HbbTV/1.4.1 firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+Load ad http://skai.smart-tv-data.com/get.php/sd/skaisd/tg/media/ty/pre/area/Power of Love
+Got ad result, no ad
+start video http://skaitvhybrid1.skai.gr/GrCyTargeting/Gr/PoL/pol20240809a.mp4 (0), title: Power of Love
+state 3
+state 1
+state 2
+3. [VideoPlayer.prototype.close] Br1
+Load ad http://skai.smart-tv-data.com/get.php/sd/skaisd/tg/media/ty/pre/area/Power of Love
+Got ad result, no ad
+start video http://skaitvhybrid1.skai.gr/GrCyTargeting/Gr/PoL/pol20240809a.mp4 (0), title: Power of Love
+state 3
+state 1
+STATUS PLAYING
+3. [VideoPlayer.prototype.close] Br1
+state 0
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+TypeError: celem.updateBounds is not a function
+TypeError: celem.updateBounds is not a function
+Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:56.0) Gecko/20100101 Firefox/56.0
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+TypeError: s is undefined
+TypeError: s is undefined
+TypeError: s is undefined
+TypeError: s is undefined
+TypeError: s is undefined
+TypeError: s is undefined
+TypeError: s is undefined
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+Script error.
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+TypeError: celem.updateBounds is not a function
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+TypeError: celem.updateBounds is not a function
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+Load ad http://skai.smart-tv-data.com/get.php/sd/skaisd/tg/media/ty/pre/area/Γαλλικό Πρωτάθλημα Ποδοσφαίρου LIVE
+start video https://cdn1.smart-tv-data.com/skai/skaisport/mpeg.2ts (0), title: [object HTMLDivElement]
+Got ad result, no ad
+state 3
+state 6
+3. [VideoPlayer.prototype.close] Br1
+state 2
+TypeError: basicTimer is null
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+Load ad http://skai.smart-tv-data.com/get.php/sd/skaisd/tg/media/ty/pre/area/Γαλλικό Πρωτάθλημα Ποδοσφαίρου LIVE
+Got ad result, no ad
+start video https://cdn1.smart-tv-data.com/skai/skaisport/mpeg.2ts (0), title: [object HTMLDivElement]
+state 3
+state 6
+3. [VideoPlayer.prototype.close] Br1
+state 2
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+Load ad http://skai.smart-tv-data.com/get.php/sd/skaisd/tg/media/ty/pre/area/Γαλλικό Πρωτάθλημα Ποδοσφαίρου LIVE
+Got ad result, no ad
+start video https://cdn1.smart-tv-data.com/skai/skaisport/mpeg.2ts (0), title: [object HTMLDivElement]
+state 3
+state 6
+3. [VideoPlayer.prototype.close] Br1
+state 2
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+TypeError: els[10] is undefined
+TypeError: els[10] is undefined
+TypeError: els[10] is undefined
+TypeError: els[10] is undefined
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+TypeError: els[10] is undefined
+TypeError: els[10] is undefined
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+TypeError: els[10] is undefined
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+Load ad http://skai.smart-tv-data.com/get.php/sd/skaisd/tg/media/ty/pre/area/Οι Πανθέοι | Επεισόδιο 111
+start video http://skaitvhybrid1.skai.gr/2_Do-Not-Delete_Shows/Pantheoi/S00133111_PANTHEOI_S01E111_NEWa.mp4 (0), title: Οι Πανθέοι | Επεισόδιο 111
+Got ad result, no ad
+state 3
+state 1
+STATUS PLAYING
+3. [VideoPlayer.prototype.close] Br1
+state 0
+TypeError: basicTimer is null
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+Load ad http://skai.smart-tv-data.com/get.php/sd/skaisd/tg/media/ty/pre/area/Η Δίκη στον ΣΚΑΪ
+start video undefined (0), title: [object HTMLDivElement]
+Got ad result, no ad
+state 3
+state 6
+3. [VideoPlayer.prototype.close] Br1
+state 2
+TypeError: basicTimer is null
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+Load ad http://skai.smart-tv-data.com/get.php/sd/skaisd/tg/media/ty/pre/area/Η Δίκη στον ΣΚΑΪ
+Got ad result, no ad
+start video undefined (0), title: [object HTMLDivElement]
+state 3
+state 6
+3. [VideoPlayer.prototype.close] Br1
+state 2
+TypeError: basicTimer is null
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+Load ad http://skai.smart-tv-data.com/get.php/sd/skaisd/tg/media/ty/pre/area/Η Δίκη στον ΣΚΑΪ
+Got ad result, no ad
+start video undefined (0), title: [object HTMLDivElement]
+state 3
+state 6
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+Load ad http://skai.smart-tv-data.com/get.php/sd/skaisd/tg/media/ty/pre/area/Ειδήσεις I Μεσημβρινό Δελτίο
+start video http://skaitvhybrid1.skai.gr/202408/video/news/deltio22040813.mp4 (0), title: Ειδήσεις I Μεσημβρινό Δελτίο
+state 3
+3. [VideoPlayer.prototype.close] Br1
+state 2
+TypeError: basicTimer is null
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+TypeError: this.items[this.focusedId] is undefined
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+Load ad http://skai.smart-tv-data.com/get.php/sd/skaisd/tg/media/ty/pre/area/Power of Love
+start video http://skaitvhybrid1.skai.gr/GrCyTargeting/Gr/PoL/poweroflove20240813a.mp4 (0), title: Power of Love
+Got ad result, no ad
+state 3
+state 1
+STATUS PLAYING
+3. [VideoPlayer.prototype.close] Br1
+state 0
+TypeError: basicTimer is null
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+Load ad http://skai.smart-tv-data.com/get.php/sd/skaisd/tg/media/ty/pre/area/Γαλλικό Πρωτάθλημα Ποδοσφαίρου LIVE
+Got ad result, no ad
+start video https://cdn1.smart-tv-data.com/skai/skaisport/mpeg.2ts (0), title: [object HTMLDivElement]
+state 3
+state 6
+3. [VideoPlayer.prototype.close] Br1
+state 2
+TypeError: basicTimer is null
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+skai home-list
+home-list home-list
+home-list submenu-0
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+skai home-list
+home-list home-list
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+ReferenceError: dd is not defined
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+skai home-list
+home-list home-list
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+skai home-list
+home-list home-list
+home-list submenu-0
+http://skai.smart-tv-data.com/json/json.php?cat=sports
+submenu-0 sports-list
+sports-list sports-list
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+skai home-list
+home-list home-list
+home-list submenu-0
+http://skai.smart-tv-data.com/json/json.php?cat=sports
+submenu-0 sports-list
+sports-list sports-list
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+skai home-list
+home-list home-list
+home-list submenu-0
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+skai home-list
+home-list home-list
+home-list submenu-0
+http://skai.smart-tv-data.com/json/json.php?cat=sports
+submenu-0 sports-list
+sports-list sports-list
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+skai home-list
+home-list home-list
+home-list submenu-0
+http://skai.smart-tv-data.com/json/json.php?cat=sports
+submenu-0 sports-list
+sports-list sports-list
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+skai home-list
+home-list home-list
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+skai home-list
+home-list home-list
+home-list submenu-0
+submenu-0 home-cont
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+TypeError: this.data is undefined
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+TypeError: this.data is undefined
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+skai home-list
+home-list home-list
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+TypeError: this.data is undefined
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+TypeError: this.data is undefined
+http://skai.smart-tv-data.com/json/json.php?cat=sports
+sports-list videoplayer
+start video https://cdn1.smart-tv-data.com/skai/skaisport/mpeg.2ts (0), title: [object HTMLDivElement]
+state 3
+state 6
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+http://skai.smart-tv-data.com/json/json.php?cat=sports
+TypeError: this.data is undefined
+sports-list videoplayer
+start video https://cdn1.smart-tv-data.com/skai/skaisport/mpeg.2ts (0), title: [object HTMLDivElement]
+state 3
+state 6
+3. [VideoPlayer.prototype.close] Br1
+state 2
+TypeError: basicTimer is null
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+skai home-list
+home-list home-list
+home-list submenu-0
+http://skai.smart-tv-data.com/json/json.php?cat=sports
+submenu-0 sports-list
+sports-list sports-list
+false sports-list
+http://skai.smart-tv-data.com/json/json.php?id=68370
+sports-list episodes-sports
+episodes-sports episodes-sports
+episodes-sports sports-list
+sports-list submenu-0
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+http://skai.smart-tv-data.com/json/json.php?cat=sports
+TypeError: this.data is undefined
+sports-list videoplayer
+start video https://cdn1.smart-tv-data.com/skai/skaisport/mpeg.2ts (0), title: [object HTMLDivElement]
+state 3
+state 6
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+http://skai.smart-tv-data.com/json/json.php?cat=sports
+TypeError: this.data is undefined
+sports-list videoplayer
+start video https://cdn1.smart-tv-data.com/skai/skaisport/mpeg.2ts (0), title: [object HTMLDivElement]
+state 3
+state 6
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+http://skai.smart-tv-data.com/json/json.php?cat=sports
+sports-list videoplayer
+start video https://cdn1.smart-tv-data.com/skai/skaisport/mpeg.2ts (0), title: [object HTMLDivElement]
+state 3
+state 6
+HbbTV/1.1.1 (;;;;;) firetv-firefox-plugin 1.3.20
+skai home-list
+home-list home-list

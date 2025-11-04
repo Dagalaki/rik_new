@@ -1,0 +1,69 @@
+{
+"type" : "RIK", 
+"elems": {
+    "cat": "LIVE",
+    "lists": [
+        {
+            "title": "TV",
+            "only_shows": "0", 
+            "radio" : "0",
+            "shows" : [
+                {
+                    "id": 0, 
+                    "title": "Rik1",
+                    "media_item_link": "http://l6.cloudskep.com/tvb6/rik1-1/mpeg.2ts",
+                    "descr": "Rik1",
+                    "short_descr" : "",
+                    "subtitle": "",
+                    "img": "img/RIK1.png",
+                    "bg": "",
+                    "show_title": "Rik1",
+                    "media_item_title": "Rik1",
+                    "category": "LIVE" 
+                },
+                {
+                    "id": 0, 
+                    "title": "Rik2",
+                    "media_item_link": "http://l6.cloudskep.com/tvb6/rik2-1/mpeg.2ts",
+                    "descr": "Rik1",
+                    "short_descr" : "",
+                    "subtitle": "",
+                    "img": "img/RIK2.png",
+                    "bg": "",
+                    "show_title": "Rik2",
+                    "media_item_title": "Rik2",
+                    "category": "LIVE" 
+                },
+                {
+                    "id": 0, 
+                    "title": "RikHD",
+                    "media_item_link": "http://l6.cloudskep.com/tvb6/rikhd1/mpeg.2ts",
+                    "descr": "RikHD",
+                    "short_descr" : "",
+                    "subtitle": "",
+                    "img": "img/RIKHD.png",
+                    "bg": "",
+                    "show_title": "RikHD",
+                    "media_item_title": "RikHD",
+                    "category": "LIVE" 
+                },
+                 {
+                    "id": 0, 
+                    "title": "RikS",
+                    "media_item_link": "http://l3.cloudskep.com/cybcsat/abr/playlist.m3u8",
+                    "descr": "RikS",
+                    "short_descr" : "",
+                    "subtitle": "",
+                    "img": "img/RIKS.png",
+                    "bg": "",
+                    "show_title": "RikS",
+                    "media_item_title": "RikS",
+                    "category": "LIVE" 
+                }
+            ]
+
+        }
+    ]
+}
+
+}
