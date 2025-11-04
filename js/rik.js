@@ -803,16 +803,18 @@ Skai.prototype.loadJson = function (idnam, id, epSubcat, activeListId) {
     else if (idnam == "summer") var url = 'http://skai.smart-tv-data.com/json/'+ (GLOBALS.dev ? 'l':'json') +'.php?id=1000000';
     else var url = 'http://skai.smart-tv-data.com/json/'+ (GLOBALS.dev ? 'l':'json') +'.php?cat=' + idnam;
 	*/
+
 var url = 'http://rik.smart-tv-data.com/json/new/' + idnam + '.json';
+
 
 var isEpisodes = false;
 if(idnam == 'episodes') {
+    if(epSubcat == 'shows') epSubcat = 'ent';
     
     var url ="getHomeJson.php?cat="+epSubcat;
     isEpisodes = true;
 } 
 else var url = "getHomeJson.php?cat="+idnam;
-
     debug(url);
 
     this.req = createHttpRequest(url, function (ret) {
@@ -3317,7 +3319,11 @@ HorizontalList.prototype.handleKeyPress = function (keyCode) {
 					return;
 				}
 				if(GLOBALS.useRef){
-                    llog("");
+                  llog('play video');
+                  llog(item);
+                  if(source === 'undefined'){
+                    if(item.mp4) source = item.mp4;
+                  }
 					item.url = source;
 					item.title = item.media_item_title;
 					if (!item.show_title && typeof this.data.show != 'undefined')
