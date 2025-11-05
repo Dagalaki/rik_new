@@ -19,7 +19,7 @@ VideoPlayerHTML5.prototype.loadSubtitles = function (){
 	debug("load subtitles "+this.srtFile);
 	var self = this, url = "videoplayer/parseSrt.php?srt_file="+escape(this.srtFile);
 	if (GLOBALS.dev)
-		url = "http://skai.smart-tv-data.com/videoplayer/parseSrt.php?srt_file="+escape(this.srtFile);
+		url = "http://rik.smart-tv-data.com/videoplayer/parseSrt.php?srt_file="+escape(this.srtFile);
 	llog("[loadSubtitles] " + url);
 	this.req = createHttpRequest(url, function(ret) {
 		self.req = null;
@@ -763,11 +763,11 @@ VideoPlayerHTML5.prototype.getAds = function( adBreak ){
 	if (adBreak.position == 'preroll') {
 		url="/get.php/sd/"+ON_Channel+"/tg/media/ty/pre/sm/"+smarttv_id+"/area/"+encodeURIComponent(serie);
 		if (GLOBALS.dev)
-			url="http://skai.smart-tv-data.com/get.php/sd/"+ON_Channel+"/tg/media/ty/pre/sm/"+smarttv_id+"/area/"+encodeURIComponent(serie);
+			url="http://rik.smart-tv-data.com/get.php/sd/"+ON_Channel+"/tg/media/ty/pre/sm/"+smarttv_id+"/area/"+encodeURIComponent(serie);
 	} else {
 		url="/get.php/sd/"+ON_Channel+"/tg/media/ty/mid/sm/"+smarttv_id+"/area/"+encodeURIComponent(serie);
 		if (GLOBALS.dev)
-			url="http://skai.smart-tv-data.com/get.php/sd/"+ON_Channel+"/tg/media/ty/mid/sm/"+smarttv_id+"/area/"+encodeURIComponent(serie);
+			url="http://rik.smart-tv-data.com/get.php/sd/"+ON_Channel+"/tg/media/ty/mid/sm/"+smarttv_id+"/area/"+encodeURIComponent(serie);
 	}
 	debug(url);
 
@@ -1117,6 +1117,7 @@ VideoPlayerHTML5.prototype.startVideo = function(isLive, ntCall) {
 	// first play preroll if present
 	var playPreroll = false;
 	// check prerolls on first start
+	self.adBreaks = false;
 	if(1 && self.adBreaks ){
 		$.each( self.adBreaks, function(n, adBreak){
 			if( !adBreak.played && adBreak.position == "preroll" ){
