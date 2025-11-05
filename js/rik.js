@@ -1069,7 +1069,7 @@ SubMenu.prototype.setFocused = function (otherobj, focus) {
                                             var imgToShow = item.img;
                                         }
                                         GLOBALS.previewTimer = null;
-                                         GLOBALS.videopreview.bg.src = imgToShow;
+                                         GLOBALS.videopreview.bg.src = "http://rik.smart-tv-data.com/"+imgToShow;
                                     }
                                 }else GLOBALS.videopreview.pause();
                             });
@@ -2026,7 +2026,8 @@ Cont.prototype.initEpisodes = function (parent, xpos, ypos, title) {
           img: this.data.epimg, 
           title: this.data.title,
           channel: (this.data.channel ? this.data.channel : ""),
-          info: this.data.info 
+          info: this.data.info, 
+          subtitle: this.data.subtitle
         });
       }
     }
@@ -2992,7 +2993,7 @@ if(GLOBALS.PREVIEW){
                     GLOBALS.previewTimer = null;
                 }, 500);
                 var imgToShow = this.items[i].img;
-                if(GLOBALS.videopreview.bg) GLOBALS.videopreview.bg.src = imgToShow;
+                if(GLOBALS.videopreview.bg) GLOBALS.videopreview.bg.src = "http://rik.smart-tv-data.com/"+ imgToShow;
 
                 }// END OF PREVIEW
 
@@ -3321,9 +3322,10 @@ HorizontalList.prototype.handleKeyPress = function (keyCode) {
 				if(GLOBALS.useRef){
                   llog('play video');
                   llog(item);
-                  if(source === 'undefined'){
+                  //      if(source === 'undefined'){
                     if(item.mp4) source = item.mp4;
-                  }
+                    else if(item.episode) source = item.episode;
+              //    }
 					item.url = source;
 					item.title = item.media_item_title;
 					if (!item.show_title && typeof this.data.show != 'undefined')
