@@ -2452,7 +2452,7 @@ height: 422px;
     height:720px;
 }
 #previewcont.full #videoshadow {
-    background: rgba(2,22,61, 0.6);
+   /* background: rgba(2,22,61, 0.6);*/
     box-shadow: 00px 00px 200px 100px #02163d inset;
 }
 #previewcont.full #videopreview {
