@@ -4455,14 +4455,14 @@ function initApp() {
 			"image_on": "",
 			"image_off": "",
 			"classname": "child"
-		},
+		}/*,
 		{
 			"name": "LIVE",
 			"active": true,
 			"image_on":"",
 			"image_off":"",
 			"classname":"live"
-		},/*,
+		},*//*,
 		
 		{
 			"name": "Είσοδος",
