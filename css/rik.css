@@ -325,10 +325,11 @@ div.list-container.league .start-info {
     float: left;
     margin: 1px;
     border: solid 3px transparent;
+    border-radius:10px;
 }
 
 .movies-category .event-list .episode.focused {
-    border: solid 3px #eeeeee !important;
+    border: solid 3px #23A6BB !important;
     opacity: 1;
 }
 
@@ -341,6 +342,7 @@ div.list-container.league .start-info {
     /*  margin-right: 5px;
     margin-left: 5px;*/
     border: solid 3px transparent;
+    border-radius:10px;
 }
 
 .movies-category .event-list .show.focused {
@@ -1293,18 +1295,27 @@ div.menuelemicon .icon.liveradio {
 
 div.menuelemicon .icon.shows {
     /*background-position: 0px -200px;*/
-    background-image: url(../img/hybrid-icons/shows.svg);
+    background-image: url(../img/rik_ent.png);
 }
 
-div.menuelemicon .icon.seires {
+div.menuelemicon .icon.series {
     /*background-position: 0px -200px;*/
-    background-image: url(../img/hybrid-icons/seires.svg);
+    background-image: url(../img/rik_series.png);
 }
 div.menuelemicon .icon.doc {
     background-image: url(../img/hybrid-icons/doc2.svg);
 }
 div.menuelemicon .icon.sports {
-    background-image: url(../img/hybrid-icons/football.svg);
+    background-image: url(../img/rik_sports.png);
+}
+div.menuelemicon .icon.child {
+    background-image: url(../img/rik_child.png);
+}
+div.menuelemicon .icon.culture {
+    background-image: url(../img/rik_culture.png);
+}
+div.menuelemicon .icon.deltia {
+    background-image: url(../img/rik_deltia.png);
 }
 div.menuelemicon .icon.live {
     background-image: url(../img/hybrid-icons/livered.png);
@@ -1319,7 +1330,11 @@ div.menuelemicon .icon.summer {
 
 div.menuelemicon .icon.news {
     /*background-position: 0px -200px;*/
-    background-image: url(../img/hybrid-icons/news.svg);
+    background-image: url(../img/rik_news.png);
+}
+div.menuelemicon .icon.deltia {
+    /*background-position: 0px -200px;*/
+    background-image: url(../img/rik_deltia.png);
 }
 
 div.menuelemicon .icon.info {

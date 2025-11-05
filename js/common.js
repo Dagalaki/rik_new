@@ -1,6 +1,6 @@
 var ENABLE_CONSENT = 0, LOG = 0, DAI = false, ENABLE_MIDDLE=1, ENABLE_POSTROLL=1, sonyChrome, NEW_RADIO = 1, ENABLE_LOGIN=1, skaimenu=[];
 var STATE_PLAYING = 1, STATE_STOP = 0, STATE_PAUSE = 2, STATE_CONNECTING = 3, STATE_BUFFERING = 4, STATE_FINISHED = 5, STATE_ERROR = 6;
-var menu=null, keyLists =["home-cont", 'live','news', 'doc' ,'sports', 'shows', 'series'];
+var menu=null, keyLists =["home-cont", 'live','news', 'doc' ,'sports', 'shows', 'series', 'deltia', 'culture', 'child'];
 function debug(s) {
 	devmode2(s);
 }
@@ -4407,12 +4407,20 @@ function initApp() {
 			"classname": "home"
 		},
 		{
-			"name": "LIVE",
+			"name": "Σειρές",
 			"active": true,
-			"image_on":"",
-			"image_off":"",
-			"classname":"live"
+			"image_on": "",
+			"image_off": "",
+			"classname": "series"
 		},
+		{
+			"name": "Δελτία Ειδήσεων",
+			"active": true,
+			"image_on": "",
+			"image_off": "",
+			"classname": "deltia"
+		},
+		
 		{
 			"name": "Ενημέρωση",
 			"active": true,
@@ -4428,12 +4436,33 @@ function initApp() {
 			"classname": "shows"
 		},
 		{
+			"name": "Πολιτισμός",
+			"active": true,
+			"image_on":"",
+			"image_off":"",
+			"classname":"culture"
+		},
+		{
 			"name": "Αθλητικά",
 			"active": true,
 			"image_on": "",
 			"image_off": "",
 			"classname": "sports"
-		}/*,
+		},
+		{
+			"name": "Παιδικά",
+			"active": true,
+			"image_on": "",
+			"image_off": "",
+			"classname": "child"
+		},
+		{
+			"name": "LIVE",
+			"active": true,
+			"image_on":"",
+			"image_off":"",
+			"classname":"live"
+		},/*,
 		
 		{
 			"name": "Είσοδος",

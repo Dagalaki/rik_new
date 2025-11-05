@@ -634,6 +634,14 @@ Skai.prototype.createLive = function (data) {
     GLOBALS.scenemgr.showCurrentScene("");
     activeCont = GLOBALS.focusmgr.getObject("live");
 }
+
+Skai.prototype.createShowsList = function (data, listname) {
+    var e = new Cont(listname, false, data);
+    GLOBALS.scenemgr.addScene(e);
+    GLOBALS.scenemgr.showCurrentScene("");
+    activeCont = GLOBALS.focusmgr.getObject(listname);
+}
+
 Skai.prototype.createNews = function (data) {
     var e = new Cont("news", false, data);
     GLOBALS.scenemgr.addScene(e);
@@ -823,7 +831,8 @@ else var url = "getHomeJson.php?cat="+idnam;
         llog('[Skai.prototype.loadJson] JSONData');
         llog(JSONData)
         if(isEpisodes){
-            var allshows = JSON.parse(JSONData);
+           // var allshows = JSON.parse(JSONData);
+            var allshows = JSONData;
             var currentshow= allshows[activeListId];
             me.createEpisodes(currentshow, epSubcat);
             return true;
@@ -834,28 +843,58 @@ else var url = "getHomeJson.php?cat="+idnam;
                 break;
             case "live":
                 llog("[Skai.prototype.loadJson] json retrieved");
-                var tmp = JSON.parse(JSONData);
+               // var tmp = JSON.parse(JSONData);
+                var tmp = JSONData;
                 var elems = tmp.elems;
+               // var elems = tmp.elems.slice(0, -1);
                 llog(elems);
                 me.createLive(elems);
                 break;
+            case "series":
+                 //var data = JSON.parse(JSONData);
+                var data = JSONData;
+                me.createShowsList(data, "series");
+               // me.createNews(data);
+                break;
+            case "deltia":
+                // var data = JSON.parse(JSONData);
+                  var data = JSONData;
+                me.createShowsList(data, "deltia");
+                //me.createNews(data);
+                break;
+            case "culture":
+                  var data = JSONData;
+               //  var data = JSON.parse(JSONData);
+               me.createShowsList(data, "culture");
+               // me.createNews(data);
+                break;
+            case "child":
+                  var data = JSONData;
+                // var data = JSON.parse(JSONData);
+               me.createShowsList(data, "child");
+               // me.createNews(data);
+                break;
             case "news":
-                var data = JSON.parse(JSONData);
-                me.createNews(data);
+                  var data = JSONData;
+                //var data = JSON.parse(JSONData);
+               me.createShowsList(data, "news");
+               // me.createNews(data);
                 break;
             case "ntokimanter":
                 me.createDoc(JSONData.elems);
                 break;
             case "ent":
-                var data = JSON.parse(JSONData);
+                //var data = JSON.parse(JSONData);
+                  var data = JSONData;
                 me.createShows(data);
                 break;
             case "series":
                 me.createSeries(JSONData.elems);
                 break;
             case "sports":
-                var data = JSON.parse(JSONData);
-    			me.createSports(data);
+               // var data = JSON.parse(JSONData);
+    			  var data = JSONData;
+                me.createSports(data);
     			break;
             case "summer":
                 me.createSummerCinema(JSONData.elems);
@@ -1056,8 +1095,8 @@ SubMenu.prototype.setFocused = function (otherobj, focus) {
                                 var JSONData = JSON.parse(ret);
                                 if(JSONData) {
                                    // var elems = JSONData.elems;
-                                    var elems = JSON.parse(JSONData);
-                                    
+                                   // var elems = JSON.parse(JSONData);
+                                    var elems = JSONData;
                                     
 
                                     if(elems){
@@ -1297,6 +1336,30 @@ SubMenu.prototype.handleRequest = function () {
 				break;
 			o.loadJson("news", 0);
 			break;
+        case 'series':
+            moves("Σειρές");
+            if (activeCont.idnam == "series")
+                break;
+            o.loadJson("series", 0);
+            break;
+        case 'deltia':
+            moves("Δελτία Ειδήσεων");
+            if (activeCont.idnam == "deltia")
+                break;
+            o.loadJson("deltia", 0);
+            break;
+        case 'culture':
+            moves("Πολιτισμός");
+            if (activeCont.idnam == "culture")
+                break;
+            o.loadJson("culture", 0);
+            break;
+        case 'child':
+            moves("Παιδικά");
+            if (activeCont.idnam == "child")
+                break;
+            o.loadJson("child", 0);
+            break;
 		case 'doc':
 			moves("Ντοκιμαντέρ");
 			if (activeCont.idnam == "ntokimanter")
@@ -1717,7 +1780,6 @@ llog("[Cont.prototype.init] data:");
 	else if (this.idnam == "radio") {
 		this.initRadio(this.elem, "", "");
 	} else if (keyLists.indexOf(currScene) != -1) {
-
 		var info = createClassDiv("", "", "start-info");
 		var titl = createClassDiv("", "", "start-info-title");
 		var dat = createClassDiv("", "", "start-info-data"), ind = 0;
@@ -1796,13 +1858,15 @@ llog("[Cont.prototype.init] data:");
 
        
             if(currScene == 'home-cont'){ 
-                    var episodes = JSON.parse(this.data);
+                    //var episodes = JSON.parse(this.data);
+                   var episodes = this.data;
                    // console.log("Episodes");
                    console.log(episodes);
 
                     var l = new HorizontalList(idlist+ind, 0, episodes);
                     //logo is not needed , we have only episodes not shows.
-                    l.data = JSON.parse(this.data);
+                  //  l.data = JSON.parse(this.data);
+                    l.data = this.data;
                     l.parentObj = this;
                     l.initEpisodes(this.outer, "", "");
                     this.buttons.push(l);
@@ -1860,10 +1924,12 @@ llog("[Cont.prototype.init] data:");
 		}*/   
 		
 	} else {
+
 		var info = createClassDiv("", "", "start-info");
 		var titl = createClassDiv("", "", "start-info-title");
-		titl.innerHTML = "<strong>" + this.data.show.title + "</strong>";
-		var dat = createClassDiv("", "", "start-info-data");
+		//titl.innerHTML = "<strong>" + this.data.show.title + "</strong>";
+		titl.innerHTML = "<strong>" + this.data.title + "</strong>";
+        var dat = createClassDiv("", "", "start-info-data");
 		info.appendChild(titl);
 		info.appendChild(dat);
 
@@ -2459,6 +2525,7 @@ function HorizontalList(idnam, listType, items) {
 HorizontalList.prototype = new BaseObject();
 HorizontalList.prototype.initShows = function (parent, xpos, ypos) {
     
+
     this.itemmargin = 165;
     this.initPosition = 175;
     this.position = 175;

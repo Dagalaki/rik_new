@@ -14,5 +14,6 @@ if(isset($_GET['cat'])){
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
-echo json_encode($json);
+//echo json_encode($json);
+echo $json;
 ?>
