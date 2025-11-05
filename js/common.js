@@ -149,28 +149,16 @@ Object.prototype.hasClass = function (className) {
 };
 
 function moves(tit) {
-	if (tit == "videoplayer") return;
 	if (tit == "") return;
-	tit = tit.replace(' - ', '/');
-	tit = tit.replace('epg', 'epg/channel:');
-	tit = tit.replace('detail', 'epg/detail');
-	tit = tit.replace('radiolist', 'radio/channel:');
 
-	try {
-		var piwik = new Image,
-			sm = '';
-		if (smarttv_id)
-			sm = '&uid=' + smarttv_id;
+	var piwik = new Image;
+	sm = '';
+	if (smarttv_id)
+		sm = '&uid=' + smarttv_id;
 
-		var cookie=1;
-		if(ENABLE_CONSENT){
-			if(getCookie("cookie_stats") == "false")
-				cookie=0;
-		}
+	piwik.src = "http://lookcy.smart-tv-data.com/teletext.php?idsite=4&rec=1&action_name=" + encodeURIComponent(tit) + '&cookie=1&url=' + encodeURIComponent('http://rik.smart-tv-data.com/') + "&s=" + ON_Channel + sm;
 
-		piwik.src = "http://skaiad.smart-tv-data.com/pi/teletext-hbbtv.1.2.php?idsite=2&rec=1&action_name=" + encodeURIComponent(tit) + '&cookie='+cookie+'&url=' + encodeURIComponent('http://skai.smart-tv-data.com') + "&s=" + aktueller_sender + sm;
-		
-	} catch (e) {}
+	return true;
 }
 
 
@@ -3146,7 +3134,7 @@ VideoPlayer.prototype.handleKeyPress = function (keyCode) {
 				case "back":
 					llog("Back Button");
 					if (GLOBALS.action == "mercedes") {
-						location.href = 'http://skai.smart-tv-data.com/?menu=sidebar';
+						//location.href = 'http://skai.smart-tv-data.com/?menu=sidebar';
 						//else location.href = '../?menu=sidebar';
 						break;
 					}
@@ -3163,7 +3151,7 @@ VideoPlayer.prototype.handleKeyPress = function (keyCode) {
 				this.fullScreen();
 			else {
 				if (GLOBALS.action == "mercedes") {
-					location.href = 'http://skai.smart-tv-data.com/?menu=sidebar';
+					//location.href = 'http://skai.smart-tv-data.com/?menu=sidebar';
 					//else location.href = '../?menu=sidebar';
 					break;
 				}
@@ -3258,7 +3246,7 @@ VideoPlayer.prototype.handleVKDown = function () {
 
 VideoPlayer.prototype.close = function () {
 	if (GLOBALS.action == "mercedes") {
-		location.href = 'http://skai.smart-tv-data.com/?menu=sidebar';
+		//location.href = 'http://skai.smart-tv-data.com/?menu=sidebar';
 		//else location.href = '../?menu=sidebar';
 	}
 	if (document.getElementById("player-bg-container")) document.getElementById("player-bg-container").style.display = "none";

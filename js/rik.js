@@ -208,7 +208,7 @@ VideoPreview.prototype.pause = function(){
     this.video.style.display = "none";
 }
 VideoPreview.prototype.play = function(){
-    alert('play!');
+    
     if(GLOBALS.ui == 3) return;
     debug("playing video preview again");
     this.video.style.opacity = 0;
@@ -627,7 +627,7 @@ Skai.prototype.createHome = function (data) {
 	}
 }
 Skai.prototype.createLive = function (data) {
-    llog("create live");
+    llog("[Skai.prototype.createLive] data:");
     llog(data);
     var e = new Cont("live", false, data);
     GLOBALS.scenemgr.addScene(e);
@@ -815,12 +815,12 @@ if(idnam == 'episodes') {
     isEpisodes = true;
 } 
 else var url = "getHomeJson.php?cat="+idnam;
-    debug(url);
+    llog("[Skai.prototype.loadJson] Request url: " + url);
 
     this.req = createHttpRequest(url, function (ret) {
         me.req = null;
         var JSONData = JSON.parse(ret);
-        llog('json data');
+        llog('[Skai.prototype.loadJson] JSONData');
         llog(JSONData)
         if(isEpisodes){
             var allshows = JSON.parse(JSONData);
@@ -833,7 +833,7 @@ else var url = "getHomeJson.php?cat="+idnam;
                 me.createHome(JSONData.elems);
                 break;
             case "live":
-                llog("LIVE json elems");
+                llog("[Skai.prototype.loadJson] json retrieved");
                 var tmp = JSON.parse(JSONData);
                 var elems = tmp.elems;
                 llog(elems);
@@ -1686,7 +1686,7 @@ function Cont(idnam, listType, data, subCat) {
 Cont.prototype = new BaseObject();
 Cont.prototype.init = function (parent, xpos, ypos, title) {
 
-llog("Cont data");
+llog("[Cont.prototype.init] data:");
      llog(this.data);
 	var cont = createClassDiv("", "", "list-container");
 	cont.id = this.idnam;
@@ -1810,6 +1810,8 @@ llog("Cont data");
 
             }else{
                
+
+               llog('Create horizontal list ');
                         //EVI load menu category
                        //thisdata = JSON.parse(this.data);
                        thisdata = this.data;
@@ -2287,7 +2289,7 @@ Cont.prototype.initEPG = function (parent, xpos, ypos) {
     this.buttons = [];
 
     var me = this;
-    var url = 'http://skai.smart-tv-data.com/json/json.php?cat=epg';
+   // var url = 'http://skai.smart-tv-data.com/json/json.php?cat=epg';
     this.req = createHttpRequest(url, function (ret) {
         me.req = null;
         var JSONData = JSON.parse(ret);
@@ -3186,7 +3188,7 @@ HorizontalList.prototype.handleKeyPress = function (keyCode) {
 			}
 			break;
 		case VK_9:
-			goRed("http://skai.smart-tv-data.com/info-skai.html?s="+GLOBALS.channelId);
+			//goRed("http://skai.smart-tv-data.com/info-skai.html?s="+GLOBALS.channelId);
 			break;
 		case VK_UP:
             
