@@ -1085,7 +1085,7 @@ div.list-container.league .start-info {
     width:100%!important;
     background: rgb(10, 36, 110);
     background:transparent;
-    box-shadow: inset 450px 0 80px -80px #0d0d34;
+    box-shadow: inset 400px 0 80px -80px #0d0d34;
 }
 
 .sidebar .inner {

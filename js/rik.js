@@ -1443,7 +1443,7 @@ console.log(menu);
 SideBar.prototype.open = function () {
     
 	this.elem.style.width = "295px";
-	GLOBALS.scenemgr.sceneStack[GLOBALS.scenemgr.sceneStack.length - 1].obj.elem.style.left = "190px";
+	//GLOBALS.scenemgr.sceneStack[GLOBALS.scenemgr.sceneStack.length - 1].obj.elem.style.left = "190px";
     //GLOBALS.scenemgr.sceneStack[GLOBALS.scenemgr.sceneStack.length - 1].obj.elem.style.opacity = "0.4";
 	for (var i = 0; i < this.buttons.length; i++) {
 		if (i == this.focusedId){
@@ -1466,7 +1466,7 @@ SideBar.prototype.open = function () {
 SideBar.prototype.close = function () {
     
 	this.elem.style.width = "174px";
-	GLOBALS.scenemgr.sceneStack[GLOBALS.scenemgr.sceneStack.length - 1].obj.elem.style.left = "0px";
+	//GLOBALS.scenemgr.sceneStack[GLOBALS.scenemgr.sceneStack.length - 1].obj.elem.style.left = "0px";
     //GLOBALS.scenemgr.sceneStack[GLOBALS.scenemgr.sceneStack.length - 1].obj.elem.style.opacity = "1";
 	for (var i = 0; i < this.buttons.length; i++) {
 		this.buttons[i].removeClass("focused");
