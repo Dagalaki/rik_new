@@ -807,14 +807,7 @@ Skai.prototype.createUser = function () {
 
 Skai.prototype.loadJson = function (idnam, id, epSubcat, activeListId) {
     var me = this;
-    /*if (idnam == "episodes") var url = 'http://skai.smart-tv-data.com/json/'+ (GLOBALS.dev ? 'l':'json') +'.php?id=' + id;
-    else if (idnam == "summer") var url = 'http://skai.smart-tv-data.com/json/'+ (GLOBALS.dev ? 'l':'json') +'.php?id=1000000';
-    else var url = 'http://skai.smart-tv-data.com/json/'+ (GLOBALS.dev ? 'l':'json') +'.php?cat=' + idnam;
-	*/
-
-var url = 'http://rik.smart-tv-data.com/json/new/' + idnam + '.json';
-
-
+    //var url = 'http://rik.smart-tv-data.com/json/new/' + idnam + '.json';
 var isEpisodes = false;
 if(idnam == 'episodes') {
     if(epSubcat == 'shows') epSubcat = 'ent';
@@ -823,15 +816,12 @@ if(idnam == 'episodes') {
     isEpisodes = true;
 } 
 else var url = "getHomeJson.php?cat="+idnam;
-    llog("[Skai.prototype.loadJson] Request url: " + url);
+    
 
     this.req = createHttpRequest(url, function (ret) {
         me.req = null;
         var JSONData = JSON.parse(ret);
-        llog('[Skai.prototype.loadJson] JSONData');
-        llog(JSONData)
         if(isEpisodes){
-           // var allshows = JSON.parse(JSONData);
             var allshows = JSONData;
             var currentshow= allshows[activeListId];
             me.createEpisodes(currentshow, epSubcat);
@@ -842,74 +832,38 @@ else var url = "getHomeJson.php?cat="+idnam;
                 me.createHome(JSONData.elems);
                 break;
             case "live":
-                llog("[Skai.prototype.loadJson] json retrieved");
-               // var tmp = JSON.parse(JSONData);
-                var tmp = JSONData;
-                var elems = tmp.elems;
-               // var elems = tmp.elems.slice(0, -1);
-                llog(elems);
+                var elems = JSONData.elems;
                 me.createLive(elems);
                 break;
             case "series":
-                 //var data = JSON.parse(JSONData);
-                var data = JSONData;
-                me.createShowsList(data, "series");
-               // me.createNews(data);
+                me.createShowsList(JSONData, "series");
                 break;
             case "deltia":
-                // var data = JSON.parse(JSONData);
-                  var data = JSONData;
-                me.createShowsList(data, "deltia");
-                //me.createNews(data);
+                me.createShowsList(JSONData, "deltia");
                 break;
             case "culture":
-                  var data = JSONData;
-               //  var data = JSON.parse(JSONData);
-               me.createShowsList(data, "culture");
-               // me.createNews(data);
+               me.createShowsList(JSONData, "culture");
                 break;
             case "child":
-                  var data = JSONData;
-                // var data = JSON.parse(JSONData);
-               me.createShowsList(data, "child");
-               // me.createNews(data);
+               me.createShowsList(JSONData, "child");
                 break;
             case "news":
-                  var data = JSONData;
-                //var data = JSON.parse(JSONData);
-               me.createShowsList(data, "news");
-               // me.createNews(data);
+               me.createShowsList(JSONData, "news");
                 break;
             case "ntokimanter":
                 me.createDoc(JSONData.elems);
                 break;
             case "ent":
-                //var data = JSON.parse(JSONData);
-                  var data = JSONData;
-                me.createShows(data);
+                me.createShows(JSONData);
                 break;
             case "series":
                 me.createSeries(JSONData.elems);
                 break;
             case "sports":
-               // var data = JSON.parse(JSONData);
-    			  var data = JSONData;
-                me.createSports(data);
+                me.createSports(JSONData);
     			break;
-            case "summer":
-                me.createSummerCinema(JSONData.elems);
-                break;
-            case "cinema":
-                me.createShows(JSONData.elems);
-                break;
             case "episodes":
                 me.createEpisodes(JSONData.elems, epSubcat);
-                break;
-            case "bigbrother":
-                me.createBigBrother(JSONData.elems);
-                break;
-            case "lexeis":
-                me.createEpisodes(JSONData, epSubcat);
                 break;
             default:
                 break;
@@ -919,8 +873,8 @@ else var url = "getHomeJson.php?cat="+idnam;
 
 var sidebar = [{
         "name": "SKAI",
-        "icon_on": "http://rik.smart-tv-data.com/img/logo.png",
-        "icon_off": "http://rik.smart-tv-data.com/img/logo.png"
+        "icon_on": "./img/rik-logo.png",
+        "icon_off": "./img/rik-logo.png"
     },
 
     //{"name": "24news", "icon_on": "", "icon_off": ""},
@@ -1487,10 +1441,10 @@ console.log(menu);
     this.skaiMObj.init(this.buttons[0], "", "");
 }
 SideBar.prototype.open = function () {
-    document.getElementsByClassName('scene-container')[0].style.opacity = "0.5";
+    
 	this.elem.style.width = "295px";
-	//GLOBALS.scenemgr.sceneStack[GLOBALS.scenemgr.sceneStack.length - 1].obj.elem.style.left = "190px";
-    GLOBALS.scenemgr.sceneStack[GLOBALS.scenemgr.sceneStack.length - 1].obj.elem.style.opacity = "0.4";
+	GLOBALS.scenemgr.sceneStack[GLOBALS.scenemgr.sceneStack.length - 1].obj.elem.style.left = "190px";
+    //GLOBALS.scenemgr.sceneStack[GLOBALS.scenemgr.sceneStack.length - 1].obj.elem.style.opacity = "0.4";
 	for (var i = 0; i < this.buttons.length; i++) {
 		if (i == this.focusedId){
 			this.buttons[i].addClass("focused");
@@ -1510,10 +1464,10 @@ SideBar.prototype.open = function () {
 	}
 }
 SideBar.prototype.close = function () {
-    document.getElementsByClassName('scene-container')[0].style.opacity = "1";
+    
 	this.elem.style.width = "174px";
-	//GLOBALS.scenemgr.sceneStack[GLOBALS.scenemgr.sceneStack.length - 1].obj.elem.style.left = "0px";
-    GLOBALS.scenemgr.sceneStack[GLOBALS.scenemgr.sceneStack.length - 1].obj.elem.style.opacity = "1";
+	GLOBALS.scenemgr.sceneStack[GLOBALS.scenemgr.sceneStack.length - 1].obj.elem.style.left = "0px";
+    //GLOBALS.scenemgr.sceneStack[GLOBALS.scenemgr.sceneStack.length - 1].obj.elem.style.opacity = "1";
 	for (var i = 0; i < this.buttons.length; i++) {
 		this.buttons[i].removeClass("focused");
 	}
@@ -2526,7 +2480,7 @@ HorizontalList.prototype = new BaseObject();
 HorizontalList.prototype.initShows = function (parent, xpos, ypos) {
     
 
-    this.itemmargin = 165;
+    this.itemmargin = (165 + 6);
     this.initPosition = 175;
     this.position = 175;
     if (GLOBALS.menu == "sidebar") this.position = 200 /*137*/ ;
@@ -2739,7 +2693,7 @@ HorizontalList.prototype.createSeriesShow = function () {
 }
 HorizontalList.prototype.initEpisodes = function (parent, xpos, ypos) {
 
-	this.itemmargin = 267;
+	this.itemmargin = (267+6);
 	this.initPosition = 175;
 	this.position = 175;
 	this.pixeltomove = 70;
@@ -2820,7 +2774,7 @@ HorizontalList.prototype.initEpisodes = function (parent, xpos, ypos) {
 	this.elem.style.width = (w+w) + "px";
 }
 HorizontalList.prototype.initSideEpisodes = function (parent, xpos, ypos) {
-	this.itemmargin = 267;
+	this.itemmargin = (267+6);
 	this.initPosition = 0;
 	this.position = 0;
 	this.pixeltomove = 70;
@@ -2882,7 +2836,7 @@ HorizontalList.prototype.initSideEpisodes = function (parent, xpos, ypos) {
 		w = 1120;
 	}
 
-	this.elem.style.width = w + "px";
+	this.elem.style.width = (w+w) + "px";
 }
 HorizontalList.prototype.initLexeisEpisodes = function (parent, xpos, ypos, title) {
     this.itemmargin = 280;

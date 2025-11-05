@@ -49,7 +49,7 @@ function jsFehler(Nachricht, Datei, Zeile) {
 	var date = new Date();
 	//var str = '[TIME: '+ date.getHours() +':'+date.getMinutes() + ']';
 	var str = "";
-	xtt.src = '/err.php?U=SKAIAPP&P=jsErr:' + Zeile + '&M=' + escape(str + ' : ' + Nachricht + ':' + agt + ':' + Datei);
+	xtt.src = '/err.php?U=RIKAPP&P=jsErr:' + Zeile + '&M=' + escape(str + ' : ' + Nachricht + ':' + agt + ':' + Datei);
 	return true;
 }
 try {

@@ -203,7 +203,7 @@ VideoPlayer.prototype.loadSubtitles = function (){
 	llog("[loadSubtitles] "+this.srtFile);
 	var self = this, url = "videoplayer/parseSrt.php?srt_file="+escape(this.srtFile);
 	if (GLOBALS.dev)
-		url = "http://skai.smart-tv-data.com/videoplayer/parseSrt.php?srt_file="+escape(this.srtFile);
+		url = "http://rik.smart-tv-data.com/videoplayer/parseSrt.php?srt_file="+escape(this.srtFile);
 	llog("[loadSubtitles] "+url);
 	this.req = createHttpRequest(url, function(ret) {
 		self.req = null;
