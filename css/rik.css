@@ -1100,7 +1100,7 @@ div.list-container.league .start-info {
 .sidebar.open .submenu .inner .text {
     visibility: visible !important;
     line-height: 40px;
-    width: 130px;
+    width: 160px;
 }
 
 .sidebar .inner.focused {
@@ -1132,7 +1132,7 @@ div.list-container.league .start-info {
     height: 50px;
     color: white;
     font-size: 17px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     left: 75px;
 }
 
@@ -1330,7 +1330,7 @@ div.menuelemicon .icon.summer {
 
 div.menuelemicon .icon.news {
     /*background-position: 0px -200px;*/
-    background-image: url(../img/rik_news.png);
+    background-image: url(../img/hybrid-icons/news.svg);
 }
 div.menuelemicon .icon.deltia {
     /*background-position: 0px -200px;*/
