@@ -1038,39 +1038,73 @@ SubMenu.prototype.setFocused = function (otherobj, focus) {
                     if(idnam == "seires") idnam = 'series';
                     if(idnam == "doc") idnam = "ntokimanter";
                     if(idnam){
-                         var url = 'http://skai.smart-tv-data.com/json/'+ (GLOBALS.dev ? 'l':'json') +'.php?cat=' + idnam;
+                        // var url = 'http://skai.smart-tv-data.com/json/'+ (GLOBALS.dev ? 'l':'json') +'.php?cat=' + idnam;
+                         var url = 'http://rik.smart-tv-data.com/json/new/' + idnam + '.json';
+                        var isEpisodes = false;
+                        if(idnam == 'shows') idnam = 'ent';
+                        if(idnam == 'episodes') {
+                            if(epSubcat == 'shows') epSubcat = 'ent';
+                            
+                            var url ="getHomeJson.php?cat="+epSubcat;
+                            isEpisodes = true;
+                        } 
+                        else var url = "getHomeJson.php?cat="+idnam;
+
                             console.log(url);
                             this.req = createHttpRequest(url, function (ret) {
                                 me.req = null;
                                 var JSONData = JSON.parse(ret);
                                 if(JSONData) {
-                                    var elems = JSONData.elems;
+                                   // var elems = JSONData.elems;
+                                    var elems = JSON.parse(JSONData);
+                                    
+                                    
+
                                     if(elems){
                                     
-                                        if( elems.lists && elems.lists[0] && ((typeof elems.lists[0].shows !=='undefined') || (typeof elems.lists[0].episodes !== 'undefined'))){
+                                        /*if( elems.lists && elems.lists[0] && ((typeof elems.lists[0].shows !=='undefined') || (typeof elems.lists[0].episodes !== 'undefined'))){
                                            
                                             if(elems.lists[0].shows && elems.lists[0].shows[0]) var item = elems.lists[0].shows[0];
                                             else {
                                                 if(elems.lists[0].episodes && elems.lists[0].episodes.length > 0) var item = elems.lists[0].episodes[0];
                                                 else if(elems.lists[1] && elems.lists[1].shows && elems.lists[1].shows.length > 0) var item = elems.lists[1].shows[0];
                                             }
+                                            */
+                                        llog('elems on submenu focused');
+                                        var item = elems[0];
+                                        llog(item);
+
                                             if(!item) {
                                                 console.log('no item found in json data for this subitem');
                                                 return;
                                             }
                                             console.log("cur item ", item);
-                                            if(item.mp4)
+                                            if(item.episode)
+                                                GLOBALS.videopreview.setSource(item.episode);
+                                            else if(item.mp4)
                                                 GLOBALS.videopreview.setSource(item.mp4);
                                             else if(item.video)
                                                 GLOBALS.videopreview.setSource(item.video);
-                                            else
+                                            else if(item.media_item_link)
                                                 GLOBALS.videopreview.setSource(item.media_item_link);
-
+                                            else if (item.episodes)
+                                            {
+                                                var episodes = [];
+                                                for (var date in item.episodes) {
+                                                  if (item.episodes.hasOwnProperty(date)) {
+                                                    episodes.push({
+                                                      mp4: item.episodes[date], 
+                                                    });
+                                                  }
+                                                }
+                                                var firstEp = episodes[0].mp4;
+                                                GLOBALS.videopreview.setSource(firstEp);
+                                            }
                                             var imgToShow = item.img;
                                         }
                                         GLOBALS.previewTimer = null;
                                          GLOBALS.videopreview.bg.src = "http://rik.smart-tv-data.com/"+imgToShow;
-                                    }
+                                    /*}*/
                                 }else GLOBALS.videopreview.pause();
                             });
                         
@@ -2104,7 +2138,8 @@ Cont.prototype.initSports = function (parent, xpos, ypos, title) {
 			var title = sc[i].stream;
 			if (sc[i]['stream-url'].indexOf('diki') > 0)
 				title='Η Δίκη στον ΣΚΑΪ'; // we have to add in stream url something like ?diki=1
-			ep.id = (i+1);
+			
+            ep.id = (i+1);
 			ep.title = title;
 			ep.live = 1;
 			ep.category = 'Αθλητικά';
