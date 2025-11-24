@@ -1834,7 +1834,7 @@ SceneManager.prototype.baseInit = function (pageid) {
 	var me=this,rf = createClassDiv("", "", "rf-div");
 	this.top.appendChild(rf);
 
-	var url = 'live.php';
+	/*var url = 'live.php';
 	me.req = createHttpRequest(url, function (ret) {
 		me.req = null;
 		me.live = JSON.parse(ret);
@@ -1849,7 +1849,7 @@ SceneManager.prototype.baseInit = function (pageid) {
 			var sm = new Menu("menu");
 			sm.init(me.top, "", "");
 		}
-	});
+	});*/
 
 	var e = new BasicMenu("basic-menu");
 	e.init(this.parent, "", "");
