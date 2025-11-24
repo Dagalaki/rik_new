@@ -156,7 +156,7 @@ function moves(tit) {
 	if (smarttv_id)
 		sm = '&uid=' + smarttv_id;
 
-	piwik.src = "http://lookcy.smart-tv-data.com/teletext.php?idsite=4&rec=1&action_name=" + encodeURIComponent(tit) + '&cookie=1&url=' + encodeURIComponent('http://rik.smart-tv-data.com/') + "&s=" + ON_Channel + sm;
+	if(!GLOBALS.dev) piwik.src = "http://lookcy.smart-tv-data.com/teletext.php?idsite=4&rec=1&action_name=" + encodeURIComponent(tit) + '&cookie=1&url=' + encodeURIComponent('http://rik.smart-tv-data.com/') + "&s=" + ON_Channel + sm;
 
 	return true;
 }
@@ -4378,9 +4378,9 @@ function initApp() {
 
 	var pageid = 46;
 	moves("Άνοιγμα Εφαρμογής");
-	var req = createHttpRequest('runapp.php', function (ret) {
+	/*var req = createHttpRequest('runapp.php', function (ret) {
 		req = null;
-	});
+	});*/
 	if (smarttv_id)
 		devmode2('Smart id: '+ smarttv_id);
 	devmode2(navigator.userAgent);
